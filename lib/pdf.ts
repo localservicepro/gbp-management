@@ -29,7 +29,7 @@ const NAVY = rgb(0.043, 0.067, 0.11);
 const CYAN = rgb(0.31, 0.765, 0.878);
 const GREY = rgb(0.4, 0.44, 0.5);
 
-export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array): Promise<Uint8Array> {
+export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array, providerSigPng?: Uint8Array): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   doc.setTitle(`GBP Management Agreement - ${d.registeredBusinessName}`);
   doc.setAuthor(COMPANY.tradingName);
@@ -101,6 +101,7 @@ export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array)
     });
   };
   kv("Provider", `${COMPANY.legalName} (ABN ${COMPANY.abn}), ${COMPANY.email}`);
+  kv("Provider signatory", `${COMPANY.signatory.name}, ${COMPANY.signatory.role}`);
   gap(4);
   kv("Client", `${d.registeredBusinessName} (ABN ${d.abn})`);
   kv("Trading as", d.companyName);
@@ -168,16 +169,34 @@ export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array)
 
   const sigBytes = Buffer.from(d.signaturePngBase64, "base64");
   const sig = await doc.embedPng(sigBytes);
-  const sigW = 220;
-  const sigH = Math.min(80, (sig.height / sig.width) * sigW);
-  ensure(sigH + 60);
-  page.drawImage(sig, { x: M, y: y - sigH, width: sigW, height: sigH });
-  page.drawLine({ start: { x: M, y: y - sigH - 4 }, end: { x: M + sigW + 40, y: y - sigH - 4 }, thickness: 0.8, color: NAVY });
-  y -= sigH + 10;
-  text(d.signerName, 11, bold);
-  text(`${d.contactRole}, ${d.registeredBusinessName}`, 9, font, GREY);
-  text(`Signed ${formatDate(d.signedAtISO)}`, 9, font, GREY);
-  gap(12);
+  const colW = (A4.w - M * 2 - 30) / 2;
+  const sigH = 70;
+  ensure(sigH + 70);
+  const top = y;
+  // Left column: Provider
+  const leftX = M;
+  if (providerSigPng) {
+    const ps = await doc.embedPng(providerSigPng);
+    const h = Math.min(sigH, (ps.height / ps.width) * (colW - 40));
+    const w = (ps.width / ps.height) * h;
+    page.drawImage(ps, { x: leftX, y: top - sigH + (sigH - h) / 2, width: w, height: h });
+  }
+  page.drawLine({ start: { x: leftX, y: top - sigH - 4 }, end: { x: leftX + colW, y: top - sigH - 4 }, thickness: 0.8, color: NAVY });
+  page.drawText(COMPANY.signatory.name, { x: leftX, y: top - sigH - 18, size: 11, font: bold, color: NAVY });
+  page.drawText(`${COMPANY.signatory.role}, ${COMPANY.legalName}`, { x: leftX, y: top - sigH - 31, size: 9, font, color: GREY });
+  page.drawText(`Signed ${formatDate(d.signedAtISO)}`, { x: leftX, y: top - sigH - 44, size: 9, font, color: GREY });
+  // Right column: Client
+  const rightX = M + colW + 30;
+  {
+    const h = Math.min(sigH, (sig.height / sig.width) * (colW - 20));
+    const w = (sig.width / sig.height) * h;
+    page.drawImage(sig, { x: rightX, y: top - sigH + (sigH - h) / 2, width: w, height: h });
+  }
+  page.drawLine({ start: { x: rightX, y: top - sigH - 4 }, end: { x: rightX + colW, y: top - sigH - 4 }, thickness: 0.8, color: NAVY });
+  page.drawText(d.signerName, { x: rightX, y: top - sigH - 18, size: 11, font: bold, color: NAVY });
+  page.drawText(`${d.contactRole}, ${d.registeredBusinessName}`, { x: rightX, y: top - sigH - 31, size: 9, font, color: GREY });
+  page.drawText(`Signed ${formatDate(d.signedAtISO)}`, { x: rightX, y: top - sigH - 44, size: 9, font, color: GREY });
+  y = top - sigH - 60;
 
   text("Audit trail", 9, bold, GREY);
   para(`Agreement ID ${d.agreementId} · Signed at ${d.signedAtISO} (UTC) · IP ${d.ip} · ${d.userAgent}`, 7.5, font, GREY);

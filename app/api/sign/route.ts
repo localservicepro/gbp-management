@@ -69,6 +69,13 @@ export async function POST(req: Request) {
       logo = undefined;
     }
 
+    let providerSig: Uint8Array | undefined;
+    try {
+      providerSig = new Uint8Array(await readFile(path.join(process.cwd(), "public", COMPANY.signatureFile)));
+    } catch {
+      providerSig = undefined;
+    }
+
     const pdf = await renderAgreementPdf(
       {
         contactName,
@@ -90,6 +97,7 @@ export async function POST(req: Request) {
         agreementId,
       },
       logo,
+      providerSig,
     );
 
     // 1. PDF into the FILE_UPLOAD custom field (and the URL into a plain text field as a reliable fallback).

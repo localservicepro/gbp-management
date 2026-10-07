@@ -15,7 +15,10 @@ export const COMPANY = {
   tradingName: "Local Service Pro",
   legalName: "Local Service Pro",
   abn: "62 752 928 611",
-  email: "support@localservicepro.com.au",
+  email: "info@localservicepro.com.au",
+  // Signs on the Provider's behalf. The signature image lives at public/provider-signature.png.
+  signatory: { name: "Ryan Henderson", role: "Director" },
+  signatureFile: "provider-signature.png",
   website: "https://localservicepro.com.au",
   address: "Australia-wide, online",
 };

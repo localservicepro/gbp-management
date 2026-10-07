@@ -257,3 +257,5 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .done-hero{display:grid;gap:22px}
 .done-hero .big{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--live);letter-spacing:-.02em;line-height:1.1}
 .done-hero .checklist li{font-size:1.02rem}
+.paper .provider-sig{height:64px;width:auto;display:block;margin-bottom:-6px}
+.paper .sig-line{align-items:end}

@@ -6,6 +6,8 @@ import { SignForm } from "@/components/SignForm";
 import { AGREEMENT_CLAUSES, COMPANY, OFFER, SERVICE_SCOPE } from "@/lib/config";
 import { getContact, readCustomFields } from "@/lib/ghl";
 import { stepUrl, verifyContact } from "@/lib/token";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
 export const metadata = { title: "Sign your agreement · GBP Management by LSP" };
 export const dynamic = "force-dynamic";
@@ -39,6 +41,7 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
   const suburbs = s(cf.gbp_priority_suburbs);
   const services = s(cf.gbp_priority_services);
   const role = s(cf.contact_role) || "Authorised representative";
+  const providerSig = existsSync(path.join(process.cwd(), "public", COMPANY.signatureFile));
   const today = new Date().toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane", day: "numeric", month: "long", year: "numeric" });
 
   return (
@@ -71,6 +74,7 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
               <div className="who">Provider</div>
               <b>{COMPANY.legalName}</b>
               <div>ABN {COMPANY.abn}</div>
+              <div>{COMPANY.signatory.name}, {COMPANY.signatory.role}</div>
               <div>{COMPANY.email}</div>
               <div>{COMPANY.address}</div>
             </div>
@@ -127,8 +131,14 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
         <section className="sign-block">
           <h2>Execution</h2>
           <div className="sig-line">
-            <div className="slot"><b>{COMPANY.legalName}</b>Provider · signed on acceptance</div>
-            <div className="slot"><b>{contactName}</b>{role}, {s(cf.registered_business_name)}</div>
+            <div>
+              {providerSig && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={`/${COMPANY.signatureFile}`} alt="" className="provider-sig" />
+              )}
+              <div className="slot"><b>{COMPANY.signatory.name}</b>{COMPANY.signatory.role}, {COMPANY.legalName}</div>
+            </div>
+            <div className="slot" style={{ alignSelf: "end" }}><b>{contactName}</b>{role}, {s(cf.registered_business_name)}</div>
           </div>
           {alreadySigned ? (
             <p className="edit">Signed by {s(cf.gbp_agreement_signer) || contactName}.</p>
