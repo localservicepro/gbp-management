@@ -108,9 +108,15 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
 
         <section>
           <h2>Scope of services</h2>
-          <ul className="scope">
-            {SERVICE_SCOPE.map((x) => <li key={x}>{x}</li>)}
-          </ul>
+          {[SERVICE_SCOPE.month1, SERVICE_SCOPE.ongoing].map((phase) => (
+            <div key={phase.title} className="phase">
+              <h3>{phase.title}</h3>
+              <p className="phase-note">{phase.note}</p>
+              <ul className="scope">
+                {phase.items.map((x) => <li key={x}>{x}</li>)}
+              </ul>
+            </div>
+          ))}
           {(suburbs || services) && (
             <dl className="kv">
               {suburbs && (<><dt>Priority suburbs</dt><dd>{suburbs}</dd></>)}

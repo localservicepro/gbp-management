@@ -127,11 +127,18 @@ export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array,
   // Scope
   text("Scope of services", 12, bold);
   gap(4);
-  for (const item of SERVICE_SCOPE) {
-    ensure(14);
-    page.drawText("•", { x: M, y: y - 10, size: 10, font, color: CYAN });
-    para(item, 10, font, NAVY, 14);
+  for (const phase of [SERVICE_SCOPE.month1, SERVICE_SCOPE.ongoing]) {
+    ensure(30);
+    text(phase.title, 10, bold);
+    para(phase.note, 9, font, GREY);
     gap(2);
+    for (const item of phase.items) {
+      ensure(14);
+      page.drawText("•", { x: M, y: y - 10, size: 10, font, color: CYAN });
+      para(item, 10, font, NAVY, 14);
+      gap(2);
+    }
+    gap(6);
   }
   if (d.suburbs || d.services) {
     gap(6);

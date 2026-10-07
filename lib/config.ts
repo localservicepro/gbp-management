@@ -52,20 +52,33 @@ export const TAGS = {
   invoiced: "gbp-invoice-sent",
 };
 
-export const SERVICE_SCOPE = [
-  "Primary and secondary Google Business Profile categories restructured around the Client's priority services.",
-  "Service area set to the Client's priority suburbs.",
-  "Services list rewritten with a description for each priority service.",
-  "Business description rewritten to name the Client's services and suburbs.",
-  "Opening hours and contact details reviewed and corrected with the Client.",
-  "Eight (8) Google Business Profile posts per month, written from photos and job details supplied by the Client.",
-  "A progress report every six (6) weeks covering profile views, searches, calls, direction requests and review count.",
-];
+export const SERVICE_SCOPE = {
+  month1: {
+    title: "Month 1: profile rebuild",
+    note: "The first month is the rebuild only. Monthly posting starts in month 2.",
+    items: [
+      "Primary and secondary Google Business Profile categories restructured around the Client's priority services.",
+      "Service area set to the Client's priority suburbs.",
+      "Services list rewritten with a description for each priority service.",
+      "Business description rewritten to name the Client's services and suburbs.",
+      "Opening hours and contact details reviewed and corrected with the Client.",
+    ],
+  },
+  ongoing: {
+    title: "Month 2 onwards: monthly management",
+    note: "Starts on the first day of the second billing month.",
+    items: [
+      "Eight (8) Google Business Profile posts per month, written from photos and job details supplied by the Client.",
+      "Profile kept accurate as the Client's hours, services and details change.",
+      "A progress report every six (6) weeks covering profile views, searches, calls, direction requests and review count.",
+    ],
+  },
+};
 
 export const AGREEMENT_CLAUSES: { title: string; body: string }[] = [
   {
     title: "1. Services",
-    body: `Local Service Pro ("LSP") will manage the Client's Google Business Profile as described in the Scope of Services. All changes to the profile in the first-month optimisation are sent to the Client for approval before they go live. LSP does not guarantee rankings, positions, call volume or revenue; Google controls search results and they vary by searcher location.`,
+    body: `Local Service Pro ("LSP") will manage the Client's Google Business Profile as described in the Scope of Services. Month one of the term is the profile rebuild only; the monthly posting and management services begin in month two. All changes to the profile in the first-month rebuild are sent to the Client for approval before they go live. LSP does not guarantee rankings, positions, call volume or revenue; Google controls search results and they vary by searcher location.`,
   },
   {
     title: "2. Fees and billing",

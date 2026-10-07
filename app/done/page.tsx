@@ -33,7 +33,7 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
         <ul className="checklist">
           <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email.</div></li>
           <li><span>02</span><div><b>Add us as Managers on your Google Business Profile</b> using the steps below. This is the only access we need.</div></li>
-          <li><span>03</span><div><b>We rebuild the profile</b> in month one and send every change to you for approval before it goes live.</div></li>
+          <li><span>03</span><div><b>Month one: we rebuild the profile</b> and send every change to you for approval before it goes live. Posting starts in month two.</div></li>
         </ul>
 
         <div className="howto">

@@ -53,13 +53,16 @@ export default function SalesPage() {
 
       <section id="included">
         <div className="eyebrow">What you get</div>
-        <h2>A full rebuild in month one, then we keep it working every month after.</h2>
+        <h2>Month one is the rebuild. From month two, we post and manage.</h2>
+        <p className="muted" style={{ marginTop: 12 }}>Two phases, one fee. The first month is spent getting the profile right; posting starts once that&apos;s done.</p>
         <div className="incl">
+          <div className="phase-head"><span className="tag">Month 1</span><b>Profile rebuild</b><span>No posts yet; this month is about getting the profile right. Every change goes to you for approval first.</span></div>
           <div><b>Categories restructured</b><p>Primary and secondary categories rebuilt around the services you want more of. Off-topic categories removed.</p></div>
           <div><b>Service area set to your suburbs</b><p>Your priority suburbs set as the service area so you appear for searches in them, not just around your address.</p></div>
           <div><b>Services list rewritten</b><p>Every priority service listed with its own description, in the words your customers search for.</p></div>
           <div><b>Business description rewritten</b><p>Names your services and your suburbs so Google and customers both know what you do and where.</p></div>
           <div><b>Hours and contact details checked</b><p>Reviewed and corrected with you so &quot;Closed&quot; never shows when you&apos;re open.</p></div>
+          <div className="phase-head"><span className="tag">Month 2 onwards</span><b>Monthly management</b><span>Starts the day your second month begins.</span></div>
           <div>
             <b>8 posts a month from your real jobs</b>
             <p>Send us a photo and the suburb. We write and post it. Google sees activity; locals see work done near them.</p>
@@ -70,6 +73,7 @@ export default function SalesPage() {
               ))}
             </div>
           </div>
+          <div><b>Profile kept accurate</b><p>Hours, services and details updated as your business changes, so the profile never drifts out of date.</p></div>
           <div><b>Progress report every 6 weeks</b><p>Profile views, searches you showed up for, calls and direction requests, review count. Plain numbers, before and after, so you can see what the ${OFFER.priceMonthly} is doing.</p></div>
         </div>
       </section>
@@ -79,8 +83,8 @@ export default function SalesPage() {
         <h2>Three stages. Nothing changes on your profile until you&apos;ve told us what you want.</h2>
         <div className="cols">
           <div className="col"><div className="n">WEEK 1</div><h3>Onboarding</h3><ul><li>You fill in the onboarding form: priority suburbs, priority services, anything to remove.</li><li>You grant LSP manager access to the profile.</li></ul></div>
-          <div className="col"><div className="n">MONTH 1</div><h3>Full optimisation</h3><ul><li>Categories, service area, services, description, hours and contact details all rebuilt.</li><li>Changes sent to you for approval before they go live.</li></ul></div>
-          <div className="col"><div className="n">ONGOING</div><h3>Monthly management</h3><ul><li>8 posts a month from your jobs.</li><li>Profile kept accurate as things change.</li><li>Progress report every 6 weeks.</li></ul></div>
+          <div className="col"><div className="n">MONTH 1</div><h3>Profile rebuild</h3><ul><li>Categories, service area, services, description, hours and contact details all rebuilt.</li><li>Changes sent to you for approval before they go live.</li><li>No posts this month; the rebuild comes first.</li></ul></div>
+          <div className="col"><div className="n">MONTH 2 ONWARDS</div><h3>Monthly management</h3><ul><li>8 posts a month from your jobs.</li><li>Profile kept accurate as things change.</li><li>Progress report every 6 weeks.</li></ul></div>
         </div>
       </section>
 
@@ -126,6 +130,7 @@ export default function SalesPage() {
         <h2>Before you sign.</h2>
         <div className="faq">
           <details><summary>Do I need to give you my Google login?</summary><p>No. You add Local Service Pro as a manager on your profile from your own account. You can remove us at any time.</p></details>
+          <details><summary>Do the 8 posts start in month one?</summary><p>No. Month one is the profile rebuild: categories, service area, services, description, hours. Posting starts in month two, once the profile is set up properly, and runs every month after that.</p></details>
           <details><summary>What do you need from me each month?</summary><p>Photos from jobs with the suburb and the service. A text from the ute is enough.</p></details>
           <details><summary>Do I need to install an app or give you access to anything else?</summary><p>No. The only access we need is manager access to your Google Business Profile, which you grant from your own Google account. No apps, no software, no access to your customer data.</p></details>
           <details><summary>Can I stop after three months?</summary><p>Yes. After the minimum term it runs month to month and either side can end it with 30 days&apos; written notice. The profile and its reviews stay yours.</p></details>

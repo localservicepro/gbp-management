@@ -275,3 +275,12 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .howto-steps li::marker{color:var(--cyan);font-family:var(--mono);font-weight:600}
 .howto .emails{display:flex;gap:10px;flex-wrap:wrap}
 .howto .emails code{font-family:var(--mono);font-size:.95rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:var(--fg);user-select:all}
+/* phase headers inside the included grid and the agreement scope */
+.incl .phase-head{grid-column:1/-1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--raised);padding:16px 24px}
+.incl .phase-head b{margin:0;font-size:1.05rem}
+.incl .phase-head b::before{display:none}
+.incl .phase-head > span:last-child{color:var(--muted);font-size:.92rem;flex-basis:100%}
+@media(min-width:900px){.incl .phase-head > span:last-child{flex-basis:auto;margin-left:auto;max-width:48ch;text-align:right}}
+.paper .phase{margin-top:14px}
+.paper .phase h3{font-size:.98rem}
+.paper .phase-note{color:#5b6472;font-size:.88rem;margin-top:2px}
