@@ -6,6 +6,7 @@ import { SignForm } from "@/components/SignForm";
 import { AGREEMENT_CLAUSES, COMPANY, OFFER, SERVICE_SCOPE } from "@/lib/config";
 import { getContact, readCustomFields } from "@/lib/ghl";
 import { stepUrl, verifyContact } from "@/lib/token";
+import { labelBusinessNumber } from "@/lib/validate";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -81,7 +82,7 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
             <div className="party">
               <div className="who">Client</div>
               <b>{s(cf.registered_business_name)}</b>
-              <div>ABN {s(cf.abn)}</div>
+              <div>{labelBusinessNumber(s(cf.abn))}</div>
               {contact.companyName && contact.companyName !== s(cf.registered_business_name) && <div>Trading as {contact.companyName}</div>}
               <div>{s(cf.business_address) || contact.address1}</div>
               {contact.website && <div>{contact.website}</div>}

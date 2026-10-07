@@ -1,6 +1,7 @@
 // Renders the signed agreement as a PDF with pdf-lib (no browser needed, runs on Vercel).
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import { AGREEMENT_CLAUSES, COMPANY, OFFER, SERVICE_SCOPE } from "./config";
+import { labelBusinessNumber } from "./validate";
 
 export type AgreementData = {
   contactName: string;
@@ -103,7 +104,7 @@ export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array,
   kv("Provider", `${COMPANY.legalName} (ABN ${COMPANY.abn}), ${COMPANY.email}`);
   kv("Provider signatory", `${COMPANY.signatory.name}, ${COMPANY.signatory.role}`);
   gap(4);
-  kv("Client", `${d.registeredBusinessName} (ABN ${d.abn})`);
+  kv("Client", `${d.registeredBusinessName} (${labelBusinessNumber(d.abn)})`);
   kv("Trading as", d.companyName);
   kv("Address", d.businessAddress);
   if (d.website) kv("Website", d.website);

@@ -27,6 +27,41 @@ export function e164(v: string): string {
   return "+" + d;
 }
 
+/** ACN: 9 digits, weighted 8..1 over the first eight, check digit = (10 - sum mod 10) mod 10. */
+export function validACN(v: string): boolean {
+  const d = (v || "").replace(/\D/g, "");
+  if (d.length !== 9) return false;
+  let sum = 0;
+  for (let i = 0; i < 8; i++) sum += +d[i] * (8 - i);
+  return (10 - (sum % 10)) % 10 === +d[8];
+}
+
+/** Accepts an ABN (11 digits) or ACN (9 digits), with or without spaces/dashes. */
+export function validBusinessNumber(v: string): "ABN" | "ACN" | null {
+  const d = (v || "").replace(/\D/g, "");
+  if (d.length === 11 && validABN(d)) return "ABN";
+  if (d.length === 9 && validACN(d)) return "ACN";
+  return null;
+}
+
+/** "ABN 12 345 678 901" or "ACN 123 456 789"; already-labelled values pass through. */
+export function formatBusinessNumber(v: string): string {
+  const raw = (v || "").trim();
+  if (/^(ABN|ACN)\s/i.test(raw)) return raw.toUpperCase().replace(/\s+/g, " ");
+  const d = raw.replace(/\D/g, "");
+  if (d.length === 11) return "ABN " + d.replace(/^(\d{2})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4");
+  if (d.length === 9) return "ACN " + d.replace(/^(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3");
+  return raw;
+}
+
+/** For display: a stored value that has no label is a legacy ABN. */
+export function labelBusinessNumber(v: string): string {
+  const raw = (v || "").trim();
+  if (!raw) return "";
+  return /^(ABN|ACN)\b/i.test(raw) ? raw : `ABN ${raw}`;
+}
+
+// kept for callers that only want the digits grouped
 export function formatABN(v: string): string {
   const d = (v || "").replace(/\D/g, "");
   return d.replace(/^(\d{2})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4");
@@ -82,7 +117,12 @@ export function validateDetails(b: Partial<DetailsInput>): { ok: true; data: Det
     services: (b.services || "").trim(),
   };
   if (!data.registered_business_name) errors.registered_business_name = "Enter the legal entity name.";
-  if (!validABN(data.abn)) errors.abn = "That ABN doesn't check out. It should be 11 digits.";
+  if (!validBusinessNumber(data.abn)) {
+    const n = data.abn.length;
+    errors.abn = n === 11 || n === 9
+      ? `That ${n === 11 ? "ABN" : "ACN"} doesn't check out. Double-check the digits against abr.business.gov.au.`
+      : "Enter your 11-digit ABN or 9-digit ACN. Spaces are fine.";
+  }
   if (!ROLES.includes(data.contact_role)) errors.contact_role = "Choose your role.";
   if (!data.business_address) errors.business_address = "Enter the business address.";
   if (data.website && !/^https?:\/\/\S+$/i.test(data.website)) {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { TAGS } from "@/lib/config";
 import { addTags, GhlError, setCustomFields, updateContact } from "@/lib/ghl";
 import { stepUrl, verifyContact } from "@/lib/token";
-import { formatABN, validateDetails } from "@/lib/validate";
+import { formatBusinessNumber, validateDetails } from "@/lib/validate";
 
 export const runtime = "nodejs";
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     });
     await setCustomFields(contactId, {
       registered_business_name: d.registered_business_name,
-      abn: formatABN(d.abn),
+      abn: formatBusinessNumber(d.abn),
       contact_role: d.contact_role,
       business_address: d.business_address,
       gbp_priority_suburbs: d.suburbs,

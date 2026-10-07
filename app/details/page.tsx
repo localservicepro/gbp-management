@@ -31,7 +31,7 @@ export default async function DetailsPage({ searchParams }: { searchParams: Prom
   }
 
   return (
-    <FlowShell current={1} title="The details that go on the agreement." intro="Legal entity, ABN and your role, so the agreement is right first time. Then a couple of questions about where you want more work.">
+    <FlowShell current={1} title="The details that go on the agreement." intro="Legal entity, ABN or ACN, and your role, so the agreement is right first time. Then a couple of questions about where you want more work.">
       <DetailsForm c={c} t={t} initial={initial} />
     </FlowShell>
   );
