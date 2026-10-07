@@ -111,8 +111,15 @@ export async function POST(req: Request) {
       gbp_agreement_signed_at: signedAtISO,
       gbp_agreement_signer: `${signerName} (${agreementId})`,
       ...(pdfUrl ? { gbp_agreement_pdf_url: pdfUrl } : {}),
-      ...(fileFieldValue ? { gbp_agreement_pdf: fileFieldValue } : {}),
     });
+    if (fileFieldValue) {
+      try {
+        await setCustomFields(contactId, { gbp_agreement_pdf: fileFieldValue });
+      } catch (e) {
+        // URL is already in the text field; the file-field attach is best effort.
+        console.error("file custom field attach failed", e);
+      }
+    }
     await addTags(contactId, [TAGS.signed]);
 
     // 2. Create and send the first invoice.
@@ -178,6 +185,7 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error("sign failed", e);
     const status = e instanceof GhlError ? 502 : 500;
-    return NextResponse.json({ error: "Couldn't finalise the agreement just now. Nothing has been charged. Try again in a moment." }, { status });
+    const ref = e instanceof GhlError ? `GHL ${e.status} on ${e.path}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message.slice(0, 200) : "unknown";
+    return NextResponse.json({ error: `Couldn't finalise the agreement just now. Nothing has been charged. Try again in a moment. (Ref: ${ref})` }, { status });
   }
 }
