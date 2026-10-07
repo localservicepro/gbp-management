@@ -94,7 +94,7 @@ export default function SalesPage() {
             <div className="price">${OFFER.priceMonthly}<small> /month inc GST</small></div>
             <dl className="terms">
               <div><dt>Minimum term</dt><dd>{OFFER.minimumTermMonths} months from sign-up (${(OFFER.priceMonthly * OFFER.minimumTermMonths).toLocaleString("en-AU")} inc GST total)</dd></div>
-              <div><dt>Billing</dt><dd>Monthly in advance, first payment on sign-up</dd></div>
+              <div><dt>Billing</dt><dd>Recurring monthly invoice by email, due on the day it&apos;s issued. First one on sign-up.</dd></div>
               <div><dt>After {OFFER.minimumTermMonths} months</dt><dd>Month to month, {OFFER.noticeDays} days&apos; written notice either way</dd></div>
               <div><dt>Not included</dt><dd>Website changes, paid ads, photography (quoted separately)</dd></div>
             </dl>
@@ -114,7 +114,7 @@ export default function SalesPage() {
           <div><b>Your details</b>Name, business, mobile and email.</div>
           <div><b>Business details</b>Legal name, ABN and your role, so the agreement is right first time.</div>
           <div><b>Sign on screen</b>The agreement is pre-filled. Read it and sign with your finger or mouse.</div>
-          <div><b>First payment</b>The invoice for the first month&apos;s ${OFFER.priceMonthly} arrives by email. Pay by card.</div>
+          <div><b>First payment</b>Your first monthly invoice arrives by email, due that day. Then the same day each month.</div>
           <div><b>Onboarding form</b>Tell us your suburbs and services. We start.</div>
         </div>
         <div className="actions" style={{ marginTop: 28 }}>

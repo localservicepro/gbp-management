@@ -19,7 +19,7 @@ Links between steps carry the GHL contact id plus an HMAC token (`?c=…&t=…`)
 1. The agreement is rendered to PDF with `pdf-lib` (parties, commercial terms, scope, clauses, signature image, audit trail: agreement ID, timestamp, IP, user agent).
 2. The PDF is uploaded to the contact's **GBP Agreement PDF** (FILE_UPLOAD) custom field; its hosted URL is also written to **GBP Agreement PDF URL** as a plain-text fallback.
 3. Status / signed-at / signer custom fields are set and the `gbp-agreement-signed` tag is added.
-4. A $500 inc GST invoice is created in GHL Invoices and sent by email; its id and number are written back to the contact and the `gbp-invoice-sent` tag is added.
+4. A recurring monthly invoice schedule ($500 inc GST, same day each month, due on issue, email only) is created and started in GHL Invoices, which emails the first invoice immediately. Schedule id, first invoice id and number are written back to the contact and the `gbp-invoice-sent` tag is added. If the schedule scope is missing, it falls back to a one-off invoice for month 1.
 
 Submitting twice (back button, double-click) is safe: a contact already marked Signed with an invoice id is redirected to `/done` without a second invoice.
 
@@ -40,6 +40,7 @@ All fields are on the **contact** model and are created automatically on first u
 | GBP Agreement Signer | TEXT |
 | GBP Agreement PDF URL | TEXT |
 | GBP Agreement PDF | FILE_UPLOAD (.pdf) |
+| GBP Invoice Schedule ID | TEXT |
 | GBP Invoice ID | TEXT |
 | GBP Invoice Number | TEXT |
 
@@ -49,7 +50,7 @@ Tags: `gbp-lead`, `gbp-details-complete`, `gbp-agreement-signed`, `gbp-invoice-s
 
 | Name | Required | Notes |
 |---|---|---|
-| `GHL_PIT_TOKEN` | yes | Private Integration Token. Scopes: `contacts.write`, `contacts.readonly`, `locations/customFields.write`, `locations/customFields.readonly`, `invoices.write`, `invoices.readonly`, `users.readonly` |
+| `GHL_PIT_TOKEN` | yes | Private Integration Token. Scopes: `contacts.write`, `contacts.readonly`, `locations/customFields.write`, `locations/customFields.readonly`, `invoices.write`, `invoices.readonly`, `invoices/schedule.write`, `invoices/schedule.readonly`, `users.readonly` |
 | `GHL_LOCATION_ID` | yes | Sub-account ID |
 | `GHL_USER_ID` | no | User the invoice is sent from. Defaults to the first user in the location. |
 | `APP_SECRET` | no | Signs step links. Defaults to a hash of the PIT token; set it so links survive a token rotation. |

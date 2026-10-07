@@ -216,6 +216,16 @@ export async function createInvoice(body: Record<string, unknown>): Promise<{ _i
   return ghl("POST", "/invoices/", body);
 }
 
+/** Recurring invoice: create the schedule, then start it (GHL emails the first invoice on the start date). */
+export async function createInvoiceSchedule(body: Record<string, unknown>): Promise<{ _id: string; invoices?: { _id: string; invoiceNumber?: string | number }[] }> {
+  return ghl("POST", "/invoices/schedule", body);
+}
+
+export async function startInvoiceSchedule(scheduleId: string): Promise<{ _id: string; invoices?: { _id: string; invoiceNumber?: string | number }[] }> {
+  const { locationId } = ghlEnv();
+  return ghl("POST", `/invoices/schedule/${encodeURIComponent(scheduleId)}/schedule`, { altId: locationId, altType: "location", liveMode: true });
+}
+
 export async function sendInvoice(invoiceId: string, action: "email" | "sms_and_email" | "sms" = "email") {
   const { locationId } = ghlEnv();
   const userId = await resolveUserId();

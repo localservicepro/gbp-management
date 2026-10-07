@@ -28,6 +28,7 @@ export async function GET() {
     await probe("customFields (locations/customFields.readonly)", `/locations/${loc}/customFields?model=contact`);
     await probe("contacts (contacts.readonly)", `/contacts/?locationId=${loc}&limit=1`);
     await probe("invoices (invoices.readonly)", `/invoices/?altId=${loc}&altType=location&limit=1&offset=0`);
+    await probe("recurring invoices (invoices/schedule.readonly)", `/invoices/schedule?altId=${loc}&altType=location&limit=1&offset=0`);
     if (!env.GHL_USER_ID) await probe("users (users.readonly, needed because GHL_USER_ID is unset)", `/users/?locationId=${loc}`);
   }
 

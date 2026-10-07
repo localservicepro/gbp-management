@@ -8,7 +8,6 @@ export const OFFER = {
   minimumTermMonths: 3,
   noticeDays: 30,
   currency: "AUD",
-  invoiceDueDays: 7,
 };
 
 export const COMPANY = {
@@ -37,6 +36,7 @@ export const CUSTOM_FIELDS = {
   gbp_agreement_signer: { name: "GBP Agreement Signer", dataType: "TEXT" },
   gbp_agreement_pdf_url: { name: "GBP Agreement PDF URL", dataType: "TEXT" },
   gbp_agreement_pdf: { name: "GBP Agreement PDF", dataType: "FILE_UPLOAD" },
+  gbp_invoice_schedule_id: { name: "GBP Invoice Schedule ID", dataType: "TEXT" },
   gbp_invoice_id: { name: "GBP Invoice ID", dataType: "TEXT" },
   gbp_invoice_number: { name: "GBP Invoice Number", dataType: "TEXT" },
 } as const;
@@ -69,7 +69,7 @@ export const AGREEMENT_CLAUSES: { title: string; body: string }[] = [
   },
   {
     title: "2. Fees and billing",
-    body: `The fee is $${OFFER.priceMonthly} per month including GST, billed monthly in advance. The first payment is due on signing and the Services start once the first payment clears. Subsequent invoices are issued monthly on the anniversary of the start date and are due within ${OFFER.invoiceDueDays} days. There is no setup fee. Advertising spend, website changes and photography are not included and are quoted separately.`,
+    body: `The fee is $${OFFER.priceMonthly} per month including GST, billed monthly in advance as a recurring invoice. The first invoice is issued on signing and is due on its issue date; the Services start once it is paid. Each following invoice is issued by email on the same day of each month and is due on the day it is issued, like a subscription. There is no setup fee. Advertising spend, website changes and photography are not included and are quoted separately.`,
   },
   {
     title: "3. Term and cancellation",
