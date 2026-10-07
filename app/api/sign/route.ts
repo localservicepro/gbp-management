@@ -137,7 +137,6 @@ export async function POST(req: Request) {
         name: COMPANY.legalName,
         website: COMPANY.website,
         ...(appUrl ? { logoUrl: `${appUrl}/lsp-logo.png` } : {}),
-        customValues: [`ABN ${COMPANY.abn}`],
       },
       contactDetails: {
         id: contactId,
@@ -163,7 +162,7 @@ export async function POST(req: Request) {
       dueDate: due,
       sentTo: { email: [contact.email || ""] },
       liveMode: true,
-      termsNotes: `<p>Thanks for signing up. This is the first month of your ${OFFER.name} agreement (${agreementId}). Once paid, the onboarding form link follows by email. Questions: ${COMPANY.email}</p>`,
+      termsNotes: `<p>${COMPANY.legalName} · ABN ${COMPANY.abn}</p><p>Thanks for signing up. This is the first month of your ${OFFER.name} agreement (${agreementId}). Once paid, the onboarding form link follows by email. Questions: ${COMPANY.email}</p>`,
     });
 
     let sent = true;
