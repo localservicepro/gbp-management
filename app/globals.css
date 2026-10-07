@@ -241,7 +241,6 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .paper .sign-block label em{color:#5b6472}
 .paper .sign-block input[type=text],.paper .sign-block input:not([type]){background:#fff;color:#141a26;border:1px solid #c8d0db}
 .paper .sign-block input::placeholder{color:#9aa3b2}
-.paper .sigpad{border:1px dashed #9aa3b2;background:#fbfcfe;height:200px}
 .paper .sign-block .check{color:#2a3140}
 .paper .sign-block .btn.secondary{color:#141a26;border-color:#c8d0db}
 .paper .sign-block .hint{color:#5b6472}
@@ -257,5 +256,16 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .done-hero{display:grid;gap:22px}
 .done-hero .big{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--live);letter-spacing:-.02em;line-height:1.1}
 .done-hero .checklist li{font-size:1.02rem}
-.paper .provider-sig{height:64px;width:auto;display:block;margin-bottom:-6px}
+/* execution block: each party gets a box above a rule; the client's box is the pad */
 .paper .sig-line{align-items:end}
+.sig-col{display:grid;gap:8px}
+.sig-box{position:relative;height:150px;border:1.5px dashed #9aa3b2;border-radius:8px;background:#f8fafc;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sig-box.static{border-style:solid;border-color:#e3e7ee;background:#fff}
+.sig-box.inked{border-style:solid;border-color:#2563ff;background:#fff}
+.sig-col.bad .sig-box{border-color:#f59e0b}
+.sig-box .sigpad{position:absolute;inset:0;width:100%;height:100%;background:transparent;border:0;border-radius:0;cursor:crosshair;touch-action:none}
+.sig-prompt{font-size:.9rem;color:#8a94a3;pointer-events:none;text-align:center;padding:0 16px}
+.sig-clear{position:absolute;top:8px;right:8px;font:inherit;font-size:.78rem;font-weight:600;color:#141a26;background:#fff;border:1px solid #c8d0db;border-radius:6px;padding:4px 10px;cursor:pointer}
+.paper .provider-sig{height:96px;width:auto;max-width:90%}
+.paper .sig-col .slot{border-top:1px solid #141a26;padding-top:8px}
+.paper .sig-col .err{color:#b45309;font-size:.85rem}

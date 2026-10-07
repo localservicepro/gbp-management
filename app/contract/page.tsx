@@ -130,20 +130,24 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
 
         <section className="sign-block">
           <h2>Execution</h2>
-          <div className="sig-line">
-            <div>
-              {providerSig && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={`/${COMPANY.signatureFile}`} alt="" className="provider-sig" />
-              )}
-              <div className="slot"><b>{COMPANY.signatory.name}</b>{COMPANY.signatory.role}, {COMPANY.legalName}</div>
-            </div>
-            <div className="slot" style={{ alignSelf: "end" }}><b>{contactName}</b>{role}, {s(cf.registered_business_name)}</div>
-          </div>
           {alreadySigned ? (
-            <p className="edit">Signed by {s(cf.gbp_agreement_signer) || contactName}.</p>
+            <div className="sig-line">
+              <div className="sig-col">
+                <div className="sig-box static">
+                  {providerSig && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={`/${COMPANY.signatureFile}`} alt="" className="provider-sig" />
+                  )}
+                </div>
+                <div className="slot"><b>{COMPANY.signatory.name}</b>{COMPANY.signatory.role}, {COMPANY.legalName}</div>
+              </div>
+              <div className="sig-col">
+                <div className="sig-box static"><span className="sig-prompt">Signed electronically</span></div>
+                <div className="slot"><b>{s(cf.gbp_agreement_signer).replace(/\s*\(GBP-[^)]*\)$/, "") || contactName}</b>{role}, {s(cf.registered_business_name)}</div>
+              </div>
+            </div>
           ) : (
-            <SignForm c={c} t={t} defaultName={contactName} />
+            <SignForm c={c} t={t} defaultName={contactName} role={role} businessName={s(cf.registered_business_name)} providerSig={providerSig} />
           )}
         </section>
 
