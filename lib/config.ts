@@ -83,16 +83,4 @@ export const AGREEMENT_CLAUSES: { title: string; body: string }[] = [
     title: "5. Ownership and access",
     body: `The Google Business Profile and its reviews remain the property of the Client at all times. LSP only ever acts as a manager on the Client's profile and never holds the Client's Google login. On termination LSP removes its manager access. Content LSP creates for the profile may continue to be used by the Client after termination.`,
   },
-  {
-    title: "6. Privacy and compliance",
-    body: `Each party will comply with the Privacy Act 1988 (Cth). LSP will only use the business details and job photos the Client provides to deliver the Services.`,
-  },
-  {
-    title: "7. Liability",
-    body: `To the extent permitted by law, LSP's total liability under this agreement is limited to the fees paid by the Client in the three (3) months before the claim. Neither party is liable for indirect or consequential loss. Nothing in this agreement excludes rights under the Australian Consumer Law that cannot be excluded.`,
-  },
-  {
-    title: "8. General",
-    body: `This agreement is governed by the laws of Queensland, Australia. It is the entire agreement between the parties for the Services and may be varied only in writing. Electronic signature of this agreement is binding under the Electronic Transactions Act 1999 (Cth).`,
-  },
 ];
