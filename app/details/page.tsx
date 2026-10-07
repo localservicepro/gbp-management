@@ -1,0 +1,48 @@
+import { Footer, Steps, TopBar } from "@/components/Chrome";
+import { DetailsForm } from "@/components/DetailsForm";
+import { InvalidLink } from "@/components/InvalidLink";
+import { getContact, readCustomFields } from "@/lib/ghl";
+import { verifyContact } from "@/lib/token";
+
+export const metadata = { title: "Business details · GBP Management by LSP" };
+export const dynamic = "force-dynamic";
+
+export default async function DetailsPage({ searchParams }: { searchParams: Promise<{ c?: string; t?: string }> }) {
+  const { c = "", t = "" } = await searchParams;
+  if (!verifyContact(c, t)) return <InvalidLink />;
+
+  // Pre-fill from GHL so a returning visitor (back button, refreshed link) doesn't retype.
+  let initial = { registered_business_name: "", abn: "", contact_role: "", business_address: "", website: "", suburbs: "", services: "" };
+  try {
+    const contact = await getContact(c);
+    const cf = await readCustomFields(contact);
+    const s = (v: unknown) => (v == null ? "" : String(v));
+    initial = {
+      registered_business_name: s(cf.registered_business_name) || contact.companyName || "",
+      abn: s(cf.abn),
+      contact_role: s(cf.contact_role),
+      business_address: s(cf.business_address) || contact.address1 || "",
+      website: contact.website || "",
+      suburbs: s(cf.gbp_priority_suburbs),
+      services: s(cf.gbp_priority_services),
+    };
+  } catch (e) {
+    console.error("details prefill failed", e);
+  }
+
+  return (
+    <div className="wrap narrow">
+      <TopBar />
+      <section>
+        <div className="eyebrow">Business details</div>
+        <h2>The details that go on the agreement.</h2>
+        <p className="muted">Legal name, ABN and your role, so the agreement is right first time.</p>
+        <div className="order">
+          <Steps current={1} />
+          <DetailsForm c={c} t={t} initial={initial} />
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+}

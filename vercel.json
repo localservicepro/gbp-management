@@ -1,0 +1,5 @@
+{
+  "functions": {
+    "app/api/sign/route.ts": { "maxDuration": 60 }
+  }
+}
