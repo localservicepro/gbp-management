@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Footer, Steps, TopBar } from "@/components/Chrome";
+import { FlowShell } from "@/components/FlowShell";
 import { InvalidLink } from "@/components/InvalidLink";
 import { ServiceError } from "@/components/ServiceError";
 import { SignForm } from "@/components/SignForm";
@@ -27,91 +27,121 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
 
   if (!cf.registered_business_name || !cf.abn) {
     return (
-      <div className="wrap narrow">
-        <TopBar />
-        <section>
-          <h2>One step missing.</h2>
-          <p className="muted" style={{ marginTop: 12 }}>We need your business details before the agreement can be prepared.</p>
-          <div className="actions"><Link className="btn" href={stepUrl("/details", c)}>Add business details</Link></div>
-        </section>
-        <Footer />
-      </div>
+      <FlowShell current={2} title="One step missing." intro="We need your business details before the agreement can be prepared.">
+        <div className="form-actions" style={{ borderTop: 0, paddingTop: 0 }}>
+          <Link className="btn" href={stepUrl("/details", c)}>Add business details</Link>
+        </div>
+      </FlowShell>
     );
   }
 
   const alreadySigned = s(cf.gbp_agreement_status) === "Signed";
   const suburbs = s(cf.gbp_priority_suburbs);
   const services = s(cf.gbp_priority_services);
+  const role = s(cf.contact_role) || "Authorised representative";
+  const today = new Date().toLocaleDateString("en-AU", { timeZone: "Australia/Brisbane", day: "numeric", month: "long", year: "numeric" });
 
   return (
-    <div className="wrap narrow">
-      <TopBar />
-      <section>
-        <div className="eyebrow">Agreement</div>
-        <h2>GBP Management Agreement.</h2>
-        <p className="muted">Pre-filled from your details. Read it through, then sign at the bottom.</p>
+    <FlowShell current={2} wide title="Your agreement, ready to sign." intro="Pre-filled from your details. Read it through, then sign at the bottom of the document. A signed PDF copy is saved to your file and emailed with the invoice.">
+      <article className="paper">
+        <header className="letterhead">
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/lsp-logo.png" alt="Local Service Pro" />
+            <div className="doc-title" style={{ marginTop: 18 }}>Google Business Profile Management Agreement</div>
+            <div className="doc-sub">Between {COMPANY.legalName} and {s(cf.registered_business_name)}</div>
+          </div>
+          <div className="meta">
+            <div>{COMPANY.tradingName}</div>
+            <div>ABN {COMPANY.abn}</div>
+            <div>Prepared {today}</div>
+          </div>
+        </header>
 
-        <div className="agreement">
-          <Steps current={2} />
+        {alreadySigned && (
+          <div className="signed-note">
+            This agreement was signed on {s(cf.gbp_agreement_signed_at).slice(0, 10)}. Your invoice has been emailed; contact {COMPANY.email} if you need another copy.
+          </div>
+        )}
 
-          {alreadySigned && (
-            <div className="banner">
-              This agreement was already signed on {s(cf.gbp_agreement_signed_at).slice(0, 10)}. Check your email for the invoice, or contact {COMPANY.email}.
+        <section>
+          <h2>Parties</h2>
+          <div className="two" style={{ marginTop: 12 }}>
+            <div className="party">
+              <div className="who">Provider</div>
+              <b>{COMPANY.legalName}</b>
+              <div>ABN {COMPANY.abn}</div>
+              <div>{COMPANY.email}</div>
+              <div>{COMPANY.address}</div>
             </div>
+            <div className="party">
+              <div className="who">Client</div>
+              <b>{s(cf.registered_business_name)}</b>
+              <div>ABN {s(cf.abn)}</div>
+              {contact.companyName && contact.companyName !== s(cf.registered_business_name) && <div>Trading as {contact.companyName}</div>}
+              <div>{s(cf.business_address) || contact.address1}</div>
+              {contact.website && <div>{contact.website}</div>}
+            </div>
+          </div>
+          <dl className="kv">
+            <dt>Authorised signatory</dt><dd>{contactName}, {role}</dd>
+            <dt>Contact</dt><dd>{contact.email} · {contact.phone}</dd>
+          </dl>
+          {!alreadySigned && <p className="edit" style={{ marginTop: 10 }}>Something wrong? <Link href={stepUrl("/details", c)}>Edit business details</Link> and come back.</p>}
+        </section>
+
+        <section>
+          <h2>Commercial terms</h2>
+          <dl className="kv">
+            <dt>Service</dt><dd>{OFFER.name} (monthly)</dd>
+            <dt>Fee</dt><dd>${OFFER.priceMonthly}.00 per month, including GST</dd>
+            <dt>Minimum term</dt><dd>{OFFER.minimumTermMonths} months from the start date (${OFFER.priceMonthly * OFFER.minimumTermMonths} inc GST in total)</dd>
+            <dt>Billing</dt><dd>Monthly in advance. First payment on signing; services start when it clears.</dd>
+            <dt>After minimum term</dt><dd>Month to month, {OFFER.noticeDays} days&apos; written notice either way</dd>
+            <dt>Not included</dt><dd>Website changes, paid advertising, photography (quoted separately)</dd>
+          </dl>
+        </section>
+
+        <section>
+          <h2>Scope of services</h2>
+          <ul className="scope">
+            {SERVICE_SCOPE.map((x) => <li key={x}>{x}</li>)}
+          </ul>
+          {(suburbs || services) && (
+            <dl className="kv">
+              {suburbs && (<><dt>Priority suburbs</dt><dd>{suburbs}</dd></>)}
+              {services && (<><dt>Priority services</dt><dd>{services}</dd></>)}
+            </dl>
           )}
+        </section>
 
-          <div>
-            <h3>Parties</h3>
-            <dl className="kv" style={{ marginTop: 10 }}>
-              <dt>Provider</dt><dd>{COMPANY.legalName} (ABN {COMPANY.abn})</dd>
-              <dt>Client</dt><dd>{s(cf.registered_business_name)} (ABN {s(cf.abn)})</dd>
-              <dt>Trading as</dt><dd>{contact.companyName || s(cf.registered_business_name)}</dd>
-              <dt>Address</dt><dd>{s(cf.business_address) || contact.address1 || "-"}</dd>
-              {contact.website && (<><dt>Website</dt><dd>{contact.website}</dd></>)}
-              <dt>Signatory</dt><dd>{contactName}, {s(cf.contact_role) || "Authorised representative"}</dd>
-              <dt>Contact</dt><dd>{contact.email} · {contact.phone}</dd>
-            </dl>
-            <p className="hint" style={{ marginTop: 10 }}>Something wrong? <Link href={stepUrl("/details", c)}>Edit business details</Link>.</p>
+        <section>
+          <h2>Terms and conditions</h2>
+          <div className="clauses">
+            {AGREEMENT_CLAUSES.map((cl) => (
+              <div className="clause" key={cl.title}><b>{cl.title}</b><p>{cl.body}</p></div>
+            ))}
           </div>
+        </section>
 
-          <div>
-            <h3>Commercial terms</h3>
-            <dl className="kv" style={{ marginTop: 10 }}>
-              <dt>Service</dt><dd>{OFFER.name} (monthly)</dd>
-              <dt>Fee</dt><dd>${OFFER.priceMonthly}.00 per month inc GST</dd>
-              <dt>Minimum term</dt><dd>{OFFER.minimumTermMonths} months from the start date (${OFFER.priceMonthly * OFFER.minimumTermMonths} inc GST total)</dd>
-              <dt>Billing</dt><dd>Monthly in advance. First payment on signing; services start when it clears.</dd>
-              <dt>After minimum term</dt><dd>Month to month, {OFFER.noticeDays} days&apos; written notice either way.</dd>
-              <dt>Not included</dt><dd>Website changes, paid advertising, photography (quoted separately).</dd>
-            </dl>
+        <section className="sign-block">
+          <h2>Execution</h2>
+          <div className="sig-line">
+            <div className="slot"><b>{COMPANY.legalName}</b>Provider · signed on acceptance</div>
+            <div className="slot"><b>{contactName}</b>{role}, {s(cf.registered_business_name)}</div>
           </div>
+          {alreadySigned ? (
+            <p className="edit">Signed by {s(cf.gbp_agreement_signer) || contactName}.</p>
+          ) : (
+            <SignForm c={c} t={t} defaultName={contactName} />
+          )}
+        </section>
 
-          <div>
-            <h3>Scope of services</h3>
-            <ul style={{ marginTop: 10 }}>
-              {SERVICE_SCOPE.map((x) => <li key={x}>{x}</li>)}
-            </ul>
-            {(suburbs || services) && (
-              <dl className="kv" style={{ marginTop: 14 }}>
-                {suburbs && (<><dt>Priority suburbs</dt><dd>{suburbs}</dd></>)}
-                {services && (<><dt>Priority services</dt><dd>{services}</dd></>)}
-              </dl>
-            )}
-          </div>
-
-          <div>
-            <h3>Terms and conditions</h3>
-            <div className="clauses" style={{ marginTop: 10 }}>
-              {AGREEMENT_CLAUSES.map((cl) => (
-                <div key={cl.title}><b>{cl.title}</b><p>{cl.body}</p></div>
-              ))}
-            </div>
-          </div>
-
-          {!alreadySigned && <SignForm c={c} t={t} defaultName={contactName} />}
-        </div>
-      </section>
-      <Footer />
-    </div>
+        <footer className="doc-foot">
+          <span>{COMPANY.tradingName} · ABN {COMPANY.abn} · {COMPANY.email}</span>
+          <span>Electronic signature binding under the Electronic Transactions Act 1999 (Cth)</span>
+        </footer>
+      </article>
+    </FlowShell>
   );
 }

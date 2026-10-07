@@ -1,4 +1,4 @@
-import { Footer, Steps, TopBar } from "@/components/Chrome";
+import { FlowShell } from "@/components/FlowShell";
 import { InvalidLink } from "@/components/InvalidLink";
 import { COMPANY, OFFER } from "@/lib/config";
 import { getContact, readCustomFields } from "@/lib/ghl";
@@ -25,29 +25,22 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
   }
 
   return (
-    <div className="wrap narrow">
-      <TopBar />
-      <section>
-        <div className="order done-panel" style={{ marginTop: 0 }}>
-          <Steps current={3} />
-          <div className="big">Signed. Invoice on its way.</div>
-          <p>
-            Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} has been emailed to <b>{email}</b>. Here&apos;s what happens next:
-          </p>
-          <ul className="checklist">
-            <li><span>01</span><div><b>Pay the first month</b> from the link in the invoice email.</div></li>
-            <li><span>02</span><div><b>Fill in the onboarding form</b> (the link arrives once payment clears) and grant LSP manager access to your profile.</div></li>
-            <li><span>03</span><div><b>We rebuild the profile</b> in month one and send every change to you for approval first.</div></li>
-          </ul>
-          {pdfUrl && (
-            <p>
-              <a className="btn secondary" href={pdfUrl} target="_blank" rel="noreferrer">Download your signed agreement (PDF)</a>
-            </p>
-          )}
-          <p className="muted">Nothing in your inbox after 10 minutes? Check spam, then email <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.</p>
+    <FlowShell current={3} title="Signed. Your invoice is on its way.">
+      <div className="done-hero">
+        <p style={{ fontSize: "1.1rem" }}>
+          Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} inc GST has been emailed to <b>{email}</b>. Here&apos;s what happens next:
+        </p>
+        <ul className="checklist">
+          <li><span>01</span><div><b>Pay the first month</b> from the link in the invoice email. Card or bank.</div></li>
+          <li><span>02</span><div><b>Fill in the onboarding form</b> (the link arrives once payment clears) and grant LSP manager access to your profile.</div></li>
+          <li><span>03</span><div><b>We rebuild the profile</b> in month one and send every change to you for approval before it goes live.</div></li>
+        </ul>
+        <div className="form-actions" style={{ borderTop: 0, paddingTop: 8 }}>
+          {pdfUrl && <a className="btn secondary" href={pdfUrl} target="_blank" rel="noreferrer">Download signed agreement (PDF)</a>}
+          <a className="btn secondary" href="/">Back to home</a>
         </div>
-      </section>
-      <Footer />
-    </div>
+        <p className="muted">Nothing in your inbox after 10 minutes? Check spam, then email <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.</p>
+      </div>
+    </FlowShell>
   );
 }

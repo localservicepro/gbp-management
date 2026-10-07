@@ -62,7 +62,6 @@ export function SignForm({ c, t, defaultName }: { c: string; t: string; defaultN
 
   return (
     <form onSubmit={onSubmit} noValidate className="stack">
-      <h3>Sign</h3>
       <div className={errors.signerName ? "field bad" : "field"}>
         <label htmlFor="signerName">Full name of signatory</label>
         <input id="signerName" value={signerName} onChange={(e) => setSignerName(e.target.value)} autoComplete="name" required />
@@ -84,7 +83,7 @@ export function SignForm({ c, t, defaultName }: { c: string; t: string; defaultN
         {errors.agreed && <span className="err">{errors.agreed}</span>}
       </div>
       <div className="actions" style={{ marginTop: 4 }}>
-        <button className="btn" type="submit" disabled={busy}>{busy ? "Preparing your agreement…" : "Sign and send my invoice"}</button>
+        <button className="btn" type="submit" disabled={busy} style={{ padding: "16px 28px", fontSize: "1.05rem" }}>{busy ? "Preparing your agreement…" : "Sign and send my invoice"}</button>
         <span className="hint">A signed PDF copy is saved to your file. The first invoice is emailed straight after.</span>
       </div>
       {error && <div className="banner">{error}</div>}

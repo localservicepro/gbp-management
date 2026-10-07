@@ -1,5 +1,5 @@
-import { Footer, Steps, TopBar } from "@/components/Chrome";
 import { DetailsForm } from "@/components/DetailsForm";
+import { FlowShell } from "@/components/FlowShell";
 import { InvalidLink } from "@/components/InvalidLink";
 import { getContact, readCustomFields } from "@/lib/ghl";
 import { verifyContact } from "@/lib/token";
@@ -31,18 +31,8 @@ export default async function DetailsPage({ searchParams }: { searchParams: Prom
   }
 
   return (
-    <div className="wrap narrow">
-      <TopBar />
-      <section>
-        <div className="eyebrow">Business details</div>
-        <h2>The details that go on the agreement.</h2>
-        <p className="muted">Legal name, ABN and your role, so the agreement is right first time.</p>
-        <div className="order">
-          <Steps current={1} />
-          <DetailsForm c={c} t={t} initial={initial} />
-        </div>
-      </section>
-      <Footer />
-    </div>
+    <FlowShell current={1} title="The details that go on the agreement." intro="Legal entity, ABN and your role, so the agreement is right first time. Then a couple of questions about where you want more work.">
+      <DetailsForm c={c} t={t} initial={initial} />
+    </FlowShell>
   );
 }
