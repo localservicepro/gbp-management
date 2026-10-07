@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Footer, Steps, TopBar } from "@/components/Chrome";
 import { InvalidLink } from "@/components/InvalidLink";
+import { ServiceError } from "@/components/ServiceError";
 import { SignForm } from "@/components/SignForm";
 import { AGREEMENT_CLAUSES, COMPANY, OFFER, SERVICE_SCOPE } from "@/lib/config";
 import { getContact, readCustomFields } from "@/lib/ghl";
@@ -13,8 +14,14 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
   const { c = "", t = "" } = await searchParams;
   if (!verifyContact(c, t)) return <InvalidLink />;
 
-  const contact = await getContact(c);
-  const cf = await readCustomFields(contact);
+  let contact, cf;
+  try {
+    contact = await getContact(c);
+    cf = await readCustomFields(contact);
+  } catch (e) {
+    console.error("contract page load failed", e);
+    return <ServiceError detail="contract-load" />;
+  }
   const s = (v: unknown) => (v == null ? "" : String(v));
   const contactName = contact.name || `${contact.firstName || ""} ${contact.lastName || ""}`.trim();
 

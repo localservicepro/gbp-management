@@ -8,7 +8,7 @@ const VERSION = "2021-07-28";
 export function ghlEnv() {
   const token = process.env.GHL_PIT_TOKEN;
   const locationId = process.env.GHL_LOCATION_ID;
-  if (!token || !locationId) throw new Error("GHL_PIT_TOKEN and GHL_LOCATION_ID must be set");
+  if (!token || !locationId) throw new Error("App not configured: set GHL_PIT_TOKEN and GHL_LOCATION_ID in the Vercel project environment variables and redeploy");
   return { token, locationId, userId: process.env.GHL_USER_ID || "" };
 }
 
