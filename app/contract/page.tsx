@@ -100,7 +100,7 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
             <dt>Service</dt><dd>{OFFER.name} (monthly)</dd>
             <dt>Fee</dt><dd>${OFFER.priceMonthly}.00 per month, including GST</dd>
             <dt>Minimum term</dt><dd>{OFFER.minimumTermMonths} months from the start date (${OFFER.priceMonthly * OFFER.minimumTermMonths} inc GST in total)</dd>
-            <dt>Billing</dt><dd>Recurring monthly invoice by email, due on its issue date. First one on signing; services start when it clears.</dd>
+            <dt>Billing</dt><dd>Monthly in advance. First invoice on signing; services start when it clears.</dd>
             <dt>After minimum term</dt><dd>Month to month, {OFFER.noticeDays} days&apos; written notice either way</dd>
             <dt>Not included</dt><dd>Website changes, paid advertising, photography (quoted separately)</dd>
           </dl>

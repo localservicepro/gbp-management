@@ -70,8 +70,6 @@ export default function SalesPage() {
               ))}
             </div>
           </div>
-          <div><b>Review requests on autopilot</b><p>After each completed job, your customer gets a text asking for a Google review. You supply the number; the system does the asking.</p></div>
-          <div><b>One inbox for every lead</b><p>Calls, texts, web chat and Google messages in one place in the LSP system, so nothing gets missed while you&apos;re on the tools.</p></div>
           <div><b>Progress report every 6 weeks</b><p>Profile views, searches you showed up for, calls and direction requests, review count. Plain numbers, before and after, so you can see what the ${OFFER.priceMonthly} is doing.</p></div>
         </div>
       </section>
@@ -82,7 +80,7 @@ export default function SalesPage() {
         <div className="cols">
           <div className="col"><div className="n">WEEK 1</div><h3>Onboarding</h3><ul><li>You fill in the onboarding form: priority suburbs, priority services, anything to remove.</li><li>You grant LSP manager access to the profile.</li></ul></div>
           <div className="col"><div className="n">MONTH 1</div><h3>Full optimisation</h3><ul><li>Categories, service area, services, description, hours and contact details all rebuilt.</li><li>Changes sent to you for approval before they go live.</li></ul></div>
-          <div className="col"><div className="n">ONGOING</div><h3>Monthly management</h3><ul><li>8 posts a month from your jobs.</li><li>Automated review requests.</li><li>Lead inbox in the LSP system.</li><li>Progress report every 6 weeks.</li></ul></div>
+          <div className="col"><div className="n">ONGOING</div><h3>Monthly management</h3><ul><li>8 posts a month from your jobs.</li><li>Profile kept accurate as things change.</li><li>Progress report every 6 weeks.</li></ul></div>
         </div>
       </section>
 
@@ -94,13 +92,13 @@ export default function SalesPage() {
             <div className="price">${OFFER.priceMonthly}<small> /month inc GST</small></div>
             <dl className="terms">
               <div><dt>Minimum term</dt><dd>{OFFER.minimumTermMonths} months from sign-up (${(OFFER.priceMonthly * OFFER.minimumTermMonths).toLocaleString("en-AU")} inc GST total)</dd></div>
-              <div><dt>Billing</dt><dd>Recurring monthly invoice by email, due on the day it&apos;s issued. First one on sign-up.</dd></div>
+              <div><dt>Billing</dt><dd>Monthly in advance, first invoice on sign-up</dd></div>
               <div><dt>After {OFFER.minimumTermMonths} months</dt><dd>Month to month, {OFFER.noticeDays} days&apos; written notice either way</dd></div>
               <div><dt>Not included</dt><dd>Website changes, paid ads, photography (quoted separately)</dd></div>
             </dl>
           </div>
           <div className="stack">
-            <div className="own"><b>You own the profile. Always.</b><br />The Google Business Profile, its reviews and your customer list stay yours. If you ever leave, we remove our access and hand you an export of your contacts.</div>
+            <div className="own"><b>You own the profile. Always.</b><br />The Google Business Profile and its reviews stay yours. We work as a manager on your profile, never with your login. If you ever leave, we remove our access and that&apos;s it.</div>
             <p className="muted" style={{ fontSize: ".95rem" }}>We don&apos;t guarantee rankings; nobody honestly can, because Google decides and it changes with where the searcher is standing. What we guarantee is the work in the agreement, done every month.</p>
             <Link className="btn" href="/start">Start my profile</Link>
           </div>
@@ -114,7 +112,7 @@ export default function SalesPage() {
           <div><b>Your details</b>Name, business, mobile and email.</div>
           <div><b>Business details</b>Legal name, ABN and your role, so the agreement is right first time.</div>
           <div><b>Sign on screen</b>The agreement is pre-filled. Read it and sign with your finger or mouse.</div>
-          <div><b>First payment</b>Your first monthly invoice arrives by email, due that day. Then the same day each month.</div>
+          <div><b>First payment</b>Your first invoice arrives by email. Pay it and we start.</div>
           <div><b>Onboarding form</b>Tell us your suburbs and services. We start.</div>
         </div>
         <div className="actions" style={{ marginTop: 28 }}>
@@ -128,9 +126,9 @@ export default function SalesPage() {
         <h2>Before you sign.</h2>
         <div className="faq">
           <details><summary>Do I need to give you my Google login?</summary><p>No. You add Local Service Pro as a manager on your profile from your own account. You can remove us at any time.</p></details>
-          <details><summary>What do you need from me each month?</summary><p>Photos from jobs with the suburb and the service, and the customer contact details for review requests. A text from the ute is enough.</p></details>
-          <details><summary>Who sends the review requests?</summary><p>They go out from the LSP system to customers you&apos;ve supplied and confirmed have agreed to be contacted. We never message anyone you haven&apos;t approved.</p></details>
-          <details><summary>Can I stop after three months?</summary><p>Yes. After the minimum term it runs month to month and either side can end it with 30 days&apos; written notice. The profile, reviews and contacts stay yours.</p></details>
+          <details><summary>What do you need from me each month?</summary><p>Photos from jobs with the suburb and the service. A text from the ute is enough.</p></details>
+          <details><summary>Do I need to install an app or give you access to anything else?</summary><p>No. The only access we need is manager access to your Google Business Profile, which you grant from your own Google account. No apps, no software, no access to your customer data.</p></details>
+          <details><summary>Can I stop after three months?</summary><p>Yes. After the minimum term it runs month to month and either side can end it with 30 days&apos; written notice. The profile and its reviews stay yours.</p></details>
           <details><summary>Is this the same as Google Ads?</summary><p>No. This is your free Google listing done properly. No ad spend, and the results don&apos;t switch off when a budget runs out.</p></details>
         </div>
       </section>

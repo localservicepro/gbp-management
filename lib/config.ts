@@ -57,8 +57,6 @@ export const SERVICE_SCOPE = [
   "Business description rewritten to name the Client's services and suburbs.",
   "Opening hours and contact details reviewed and corrected with the Client.",
   "Eight (8) Google Business Profile posts per month, written from photos and job details supplied by the Client.",
-  "Automated Google review requests sent to customers the Client supplies and has confirmed consent to contact.",
-  "A single lead inbox in the LSP system for calls, texts, web chat and Google messages.",
   "A progress report every six (6) weeks covering profile views, searches, calls, direction requests and review count.",
 ];
 
@@ -69,7 +67,7 @@ export const AGREEMENT_CLAUSES: { title: string; body: string }[] = [
   },
   {
     title: "2. Fees and billing",
-    body: `The fee is $${OFFER.priceMonthly} per month including GST, billed monthly in advance as a recurring invoice. The first invoice is issued on signing and is due on its issue date; the Services start once it is paid. Each following invoice is issued by email on the same day of each month and is due on the day it is issued, like a subscription. There is no setup fee. Advertising spend, website changes and photography are not included and are quoted separately.`,
+    body: `The fee is $${OFFER.priceMonthly} per month including GST, billed monthly in advance. The first invoice is issued on signing and the Services start once it is paid. Following invoices are issued by email monthly on the same day each month and are payable on issue. There is no setup fee. Advertising spend, website changes and photography are not included and are quoted separately.`,
   },
   {
     title: "3. Term and cancellation",
@@ -77,15 +75,15 @@ export const AGREEMENT_CLAUSES: { title: string; body: string }[] = [
   },
   {
     title: "4. Client responsibilities",
-    body: `The Client will: grant LSP manager access to the Google Business Profile; complete the onboarding form with priority suburbs and services; supply job photos and details for posts; supply customer contact details for review requests only where the customer has agreed to be contacted; and respond to approval requests within a reasonable time. Delays caused by the Client do not extend or pause the billing period.`,
+    body: `The Client will: grant LSP manager access to the Google Business Profile; complete the onboarding form with priority suburbs and services; supply job photos and details for posts; and respond to approval requests within a reasonable time. Delays caused by the Client do not extend or pause the billing period.`,
   },
   {
     title: "5. Ownership and access",
-    body: `The Google Business Profile, its reviews and the Client's customer list remain the property of the Client at all times. On termination LSP removes its manager access and, on request, provides an export of the contacts held in the LSP system within 14 days. Content LSP creates for the profile may continue to be used by the Client after termination.`,
+    body: `The Google Business Profile and its reviews remain the property of the Client at all times. LSP only ever acts as a manager on the Client's profile and never holds the Client's Google login. On termination LSP removes its manager access. Content LSP creates for the profile may continue to be used by the Client after termination.`,
   },
   {
     title: "6. Privacy and compliance",
-    body: `Each party will comply with the Privacy Act 1988 (Cth) and the Spam Act 2003 (Cth). The Client warrants it has consent to share customer details it provides to LSP for review requests. LSP will only use Client and customer data to deliver the Services.`,
+    body: `Each party will comply with the Privacy Act 1988 (Cth). LSP will only use the business details and job photos the Client provides to deliver the Services.`,
   },
   {
     title: "7. Liability",

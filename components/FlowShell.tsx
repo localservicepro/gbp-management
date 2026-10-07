@@ -39,7 +39,7 @@ export function FlowShell({ current, title, intro, children, wide }: { current: 
           <div className="line muted"><span>Includes GST</span><span>Yes</span></div>
           <div className="line muted"><span>Minimum term</span><span>{OFFER.minimumTermMonths} months</span></div>
           <div className="line muted"><span>Setup fee</span><span>None</span></div>
-          <div className="line muted"><span>Due today</span><span>Nothing until you sign</span></div>
+          <div className="line muted"><span>Charged today</span><span>Nothing until you sign</span></div>
         </div>
 
         <div className="rail-foot">

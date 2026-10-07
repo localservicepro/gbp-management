@@ -162,7 +162,7 @@ export async function POST(req: Request) {
         taxInclusive: true,
       },
     ];
-    const termsNotes = `<p>${COMPANY.legalName} · ABN ${COMPANY.abn}</p><p>Your ${OFFER.name} agreement (${agreementId}) is billed monthly on the ${ordinal(dayOfMonth)}, due on the day of issue. Once the first payment clears, the onboarding form link follows by email. Questions: ${COMPANY.email}</p>`;
+    const termsNotes = `<p>${COMPANY.legalName} · ABN ${COMPANY.abn}</p><p>Your ${OFFER.name} agreement (${agreementId}) is billed monthly on the ${ordinal(dayOfMonth)}. Once the first payment clears, the onboarding form link follows by email. Questions: ${COMPANY.email}</p>`;
 
     let scheduleId = "";
     let invoiceId = "";

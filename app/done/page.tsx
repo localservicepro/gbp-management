@@ -31,7 +31,7 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
           Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} inc GST has been emailed to <b>{email}</b>. Here&apos;s what happens next:
         </p>
         <ul className="checklist">
-          <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email. It&apos;s due today; the next one comes the same day next month.</div></li>
+          <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email.</div></li>
           <li><span>02</span><div><b>Fill in the onboarding form</b> (the link arrives once payment clears) and grant LSP manager access to your profile.</div></li>
           <li><span>03</span><div><b>We rebuild the profile</b> in month one and send every change to you for approval before it goes live.</div></li>
         </ul>
