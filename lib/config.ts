@@ -18,6 +18,8 @@ export const COMPANY = {
   // Signs on the Provider's behalf. The signature image lives at public/provider-signature.png.
   signatory: { name: "Ryan Henderson", role: "Director" },
   signatureFile: "provider-signature.png",
+  // Google accounts the client invites as Managers on their Business Profile.
+  gbpManagerEmails: ["support@localservicepro.com.au", "info@localservicepro.com.au"],
   website: "https://localservicepro.com.au",
   address: "Australia-wide, online",
 };

@@ -32,9 +32,26 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
         </p>
         <ul className="checklist">
           <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email.</div></li>
-          <li><span>02</span><div><b>Fill in the onboarding form</b> (the link arrives once payment clears) and grant LSP manager access to your profile.</div></li>
+          <li><span>02</span><div><b>Add us as Managers on your Google Business Profile</b> using the steps below. This is the only access we need.</div></li>
           <li><span>03</span><div><b>We rebuild the profile</b> in month one and send every change to you for approval before it goes live.</div></li>
         </ul>
+
+        <div className="howto">
+          <div className="eyebrow">Add us to your Google Business Profile</div>
+          <p className="muted" style={{ marginTop: 6 }}>Takes about two minutes. You stay the Owner; we&apos;re added as Managers and you can remove us any time.</p>
+          <ol className="howto-steps">
+            <li>On a computer, open <a href="https://business.google.com/" target="_blank" rel="noreferrer">business.google.com</a> and sign in with the Google account that owns your profile. (Or search your business name on Google while signed in and click <b>Edit profile</b>.)</li>
+            <li>Open your profile&apos;s menu (the three dots) and choose <b>Business Profile settings</b>.</li>
+            <li>Click <b>People and access</b>, then <b>Add</b>.</li>
+            <li>Enter the first email below, set the role to <b>Manager</b>, and click <b>Invite</b>. Repeat for the second email.</li>
+          </ol>
+          <div className="emails">
+            {COMPANY.gbpManagerEmails.map((e) => (
+              <code key={e}>{e}</code>
+            ))}
+          </div>
+          <p className="muted">We accept the invites the same business day and email you when we&apos;ve started. Stuck? Reply to the invoice email or write to <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> and we&apos;ll walk you through it on a call.</p>
+        </div>
         <div className="form-actions" style={{ borderTop: 0, paddingTop: 8 }}>
           {pdfUrl && <a className="btn secondary" href={pdfUrl} target="_blank" rel="noreferrer">Download signed agreement (PDF)</a>}
           <a className="btn secondary" href="/">Back to home</a>

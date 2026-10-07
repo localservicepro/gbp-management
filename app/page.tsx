@@ -112,8 +112,8 @@ export default function SalesPage() {
           <div><b>Your details</b>Name, business, mobile and email.</div>
           <div><b>Business details</b>Legal name, ABN and your role, so the agreement is right first time.</div>
           <div><b>Sign on screen</b>The agreement is pre-filled. Read it and sign with your finger or mouse.</div>
-          <div><b>First payment</b>Your first invoice arrives by email. Pay it and we start.</div>
-          <div><b>Onboarding form</b>Tell us your suburbs and services. We start.</div>
+          <div><b>First payment</b>Your first invoice arrives by email. Pay it from the link.</div>
+          <div><b>Add us to your GBP</b>Invite our two emails as Managers on your profile. We start.</div>
         </div>
         <div className="actions" style={{ marginTop: 28 }}>
           <Link className="btn" href="/start">Start my profile</Link>

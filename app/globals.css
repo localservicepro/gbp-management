@@ -269,3 +269,9 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .paper .provider-sig{height:96px;width:auto;max-width:90%}
 .paper .sig-col .slot{border-top:1px solid #141a26;padding-top:8px}
 .paper .sig-col .err{color:#b45309;font-size:.85rem}
+/* done page: how to add LSP as GBP managers */
+.howto{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--surface);display:grid;gap:14px}
+.howto-steps{margin:0;padding-left:22px;display:grid;gap:10px;font-size:1rem}
+.howto-steps li::marker{color:var(--cyan);font-family:var(--mono);font-weight:600}
+.howto .emails{display:flex;gap:10px;flex-wrap:wrap}
+.howto .emails code{font-family:var(--mono);font-size:.95rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:var(--fg);user-select:all}
