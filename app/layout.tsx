@@ -5,7 +5,7 @@ import { COMPANY, OFFER } from "@/lib/config";
 export const metadata: Metadata = {
   title: `GBP Management by ${COMPANY.tradingName}`,
   description: `Google Business Profile management for Australian local service businesses. $${OFFER.priceMonthly}/month inc GST, ${OFFER.minimumTermMonths}-month minimum. Sign up online in about 4 minutes.`,
-  icons: { icon: "/lsp-logo.png" },
+  icons: { icon: [{ url: "/favicon-64.png", sizes: "64x64", type: "image/png" }, { url: "/icon.png", sizes: "512x512", type: "image/png" }], apple: "/apple-icon.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
