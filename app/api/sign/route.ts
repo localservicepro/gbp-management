@@ -13,6 +13,7 @@ import {
   GhlError,
   ghlEnv,
   readCustomFields,
+  removeTags,
   sendInvoice,
   setCustomFields,
   startInvoiceSchedule,
@@ -133,6 +134,11 @@ export async function POST(req: Request) {
       }
     }
     await addTags(contactId, [TAGS.signed, TAGS.client]);
+    try {
+      await removeTags(contactId, [TAGS.lead]); // they're a client now, not a lead
+    } catch (e) {
+      console.error("removing lead tag failed", e);
+    }
 
     // 2. Recurring monthly invoice, like a subscription: first invoice today, then the same
     //    day each month, each due on its issue date. Email only; GHL never texts from this.

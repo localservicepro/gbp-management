@@ -47,7 +47,7 @@ All fields are on the **contact** model and are created automatically on first u
 | GBP Invoice Number | TEXT |
 | GBP ClickUp Task URL | TEXT |
 
-Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete` (step 2), `gbp-agreement-signed` + `gbp optimisation` (on signing), `gbp-invoice-sent` (invoice emailed). Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
+Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete` (step 2), `gbp-agreement-signed` + `gbp optimisation` added and `gbp-lead` removed (on signing), `gbp-invoice-sent` (invoice emailed). Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
 
 ## Environment variables (Vercel)
 

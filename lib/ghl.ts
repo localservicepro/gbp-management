@@ -98,6 +98,10 @@ export async function addTags(id: string, tags: string[]) {
   await ghl("POST", `/contacts/${encodeURIComponent(id)}/tags`, { tags });
 }
 
+export async function removeTags(id: string, tags: string[]) {
+  await ghl("DELETE", `/contacts/${encodeURIComponent(id)}/tags`, { tags });
+}
+
 // ---------- Custom fields (auto-created when missing) ----------
 
 type GhlCustomField = { id: string; name: string; fieldKey: string; dataType: string; model?: string };

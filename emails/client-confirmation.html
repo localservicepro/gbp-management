@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You're signed up: GBP Management</title>
+<!--
+  GHL workflow email: send to the client when the "gbp optimisation" tag is added (or on invoice paid).
+  Merge fields used: contact.first_name, contact.company_name, contact.email,
+  contact.gbp_agreement_pdf_url, contact.gbp_invoice_number, contact.registered_business_name
+  Paste into Workflow > Send Email > Code editor (or save as an Email Template).
+-->
+</head>
+<body style="margin:0;padding:0;background:#f2f5fa;font-family:Inter,'Segoe UI',Arial,Helvetica,sans-serif;color:#141a26;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f5fa;">
+  <tr><td align="center" style="padding:32px 16px;">
+    <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+      <!-- header -->
+      <tr><td style="background:#0b111c;border-radius:12px 12px 0 0;padding:28px 32px;">
+        <img src="https://gbp.localservicepro.com.au/lsp-logo.png" alt="Local Service Pro" width="200" style="display:block;height:auto;border:0;">
+      </td></tr>
+
+      <!-- body -->
+      <tr><td style="background:#ffffff;padding:36px 32px 8px;">
+        <p style="margin:0 0 6px;font:600 12px/1 'JetBrains Mono',Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:#2563ff;">Agreement signed</p>
+        <h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;font-weight:800;letter-spacing:-.02em;">You're all set, {{contact.first_name}}.</h1>
+        <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:#3b4350;">
+          Thanks for signing up to GBP Management for <strong>{{contact.company_name}}</strong>. Your signed agreement is attached below and your first invoice (#{{contact.gbp_invoice_number}}) has been sent to this address in a separate email.
+        </p>
+        <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3b4350;">
+          Two quick things and we can get started.
+        </p>
+      </td></tr>
+
+      <!-- steps -->
+      <tr><td style="background:#ffffff;padding:0 32px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="40" valign="top" style="padding:0 0 18px;"><span style="display:inline-block;width:28px;height:28px;border-radius:14px;background:#2563ff;color:#fff;font:700 13px/28px Arial,sans-serif;text-align:center;">1</span></td>
+            <td valign="top" style="padding:3px 0 18px;font-size:15px;line-height:1.55;color:#3b4350;"><strong style="color:#141a26;">Pay the first invoice</strong> from the link in the invoice email. Nothing starts until it clears.</td>
+          </tr>
+          <tr>
+            <td width="40" valign="top" style="padding:0 0 18px;"><span style="display:inline-block;width:28px;height:28px;border-radius:14px;background:#2563ff;color:#fff;font:700 13px/28px Arial,sans-serif;text-align:center;">2</span></td>
+            <td valign="top" style="padding:3px 0 18px;font-size:15px;line-height:1.55;color:#3b4350;"><strong style="color:#141a26;">Add us as Managers on your Google Business Profile.</strong> This is the only access we need. Steps are below; it takes about two minutes.</td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- how to add managers -->
+      <tr><td style="background:#ffffff;padding:8px 32px 28px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e3e7ee;border-radius:10px;">
+          <tr><td style="padding:20px 22px;">
+            <p style="margin:0 0 10px;font-size:15px;font-weight:700;color:#141a26;">How to add us to your Google Business Profile</p>
+            <ol style="margin:0 0 14px;padding-left:20px;font-size:14px;line-height:1.6;color:#3b4350;">
+              <li>On a computer, go to <a href="https://business.google.com/" style="color:#2563ff;">business.google.com</a> and sign in with the Google account that owns the profile.</li>
+              <li>Open the three-dot menu and choose <strong>Business Profile settings</strong>.</li>
+              <li>Click <strong>People and access</strong>, then <strong>Add</strong>.</li>
+              <li>Enter the email, set the role to <strong>Manager</strong>, click <strong>Invite</strong>. Repeat for the second email.</li>
+            </ol>
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding:0 8px 8px 0;"><code style="display:inline-block;font:600 13px 'JetBrains Mono',Consolas,monospace;background:#ffffff;border:1px solid #c8d0db;border-radius:6px;padding:8px 12px;color:#141a26;">support@localservicepro.com.au</code></td>
+              </tr>
+              <tr>
+                <td style="padding:0 8px 0 0;"><code style="display:inline-block;font:600 13px 'JetBrains Mono',Consolas,monospace;background:#ffffff;border:1px solid #c8d0db;border-radius:6px;padding:8px 12px;color:#141a26;">info@localservicepro.com.au</code></td>
+              </tr>
+            </table>
+            <p style="margin:12px 0 0;font-size:13px;line-height:1.5;color:#5b6472;">You stay the Owner. We're Managers only and you can remove us at any time.</p>
+          </td></tr>
+        </table>
+      </td></tr>
+
+      <!-- what happens next -->
+      <tr><td style="background:#ffffff;padding:0 32px 28px;">
+        <p style="margin:0 0 10px;font-size:15px;font-weight:700;color:#141a26;">What happens next</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.55;color:#3b4350;">
+          <tr>
+            <td width="120" valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Month 1</td>
+            <td valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;">Profile rebuild: categories, service area, services, description, hours. Every change comes to you for approval before it goes live. No posts yet.</td>
+          </tr>
+          <tr>
+            <td width="120" valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Month 2 onwards</td>
+            <td valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;">8 posts a month from your real jobs (send us a photo and the suburb), profile kept accurate, progress report every 6 weeks.</td>
+          </tr>
+          <tr>
+            <td width="120" valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;color:#5b6472;">Billing</td>
+            <td valign="top" style="padding:6px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;">$500/month inc GST, 3-month minimum, then month to month with 30 days' notice.</td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- button -->
+      <tr><td style="background:#ffffff;padding:0 32px 36px;">
+        <table role="presentation" cellpadding="0" cellspacing="0">
+          <tr><td style="background:#2563ff;border-radius:8px;">
+            <a href="{{contact.gbp_agreement_pdf_url}}" style="display:inline-block;padding:14px 24px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">Download your signed agreement (PDF)</a>
+          </td></tr>
+        </table>
+        <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#5b6472;">Questions? Just reply to this email or write to <a href="mailto:info@localservicepro.com.au" style="color:#2563ff;">info@localservicepro.com.au</a>.</p>
+      </td></tr>
+
+      <!-- footer -->
+      <tr><td style="background:#0b111c;border-radius:0 0 12px 12px;padding:22px 32px;font-size:12px;line-height:1.6;color:#9aa6b8;">
+        Local Service Pro · ABN 62 752 928 611 · info@localservicepro.com.au<br>
+        Agreement for {{contact.registered_business_name}}. You received this because you signed up at gbp.localservicepro.com.au.
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>
