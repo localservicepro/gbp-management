@@ -18,7 +18,9 @@ import {
   startInvoiceSchedule,
   uploadToFileField,
 } from "@/lib/ghl";
+import { clickupEnv, createSignupTask } from "@/lib/clickup";
 import { renderAgreementPdf } from "@/lib/pdf";
+import { labelBusinessNumber } from "@/lib/validate";
 import { stepUrl, verifyContact } from "@/lib/token";
 
 export const runtime = "nodejs";
@@ -235,6 +237,36 @@ export async function POST(req: Request) {
       gbp_invoice_number: invoiceNumber,
     });
     if (sent) await addTags(contactId, [TAGS.invoiced]);
+
+    // 3. ClickUp task for the ops team (Operations > New Project > GBP Optimisation).
+    //    Best effort: a ClickUp outage must not block a client who has already signed and been invoiced.
+    if (clickupEnv().enabled) {
+      try {
+        const task = await createSignupTask({
+          businessName: contact.companyName || str(cf.registered_business_name),
+          legalName: str(cf.registered_business_name),
+          businessNumber: labelBusinessNumber(str(cf.abn)),
+          contactName,
+          role: str(cf.contact_role) || "Authorised representative",
+          email: contact.email || "",
+          phone: contact.phone || "",
+          address: str(cf.business_address) || contact.address1 || "",
+          website: contact.website || undefined,
+          suburbs: str(cf.gbp_priority_suburbs) || undefined,
+          services: str(cf.gbp_priority_services) || undefined,
+          agreementId,
+          signedAtISO,
+          pdfUrl: pdfUrl || undefined,
+          ghlContactUrl: `https://app.gohighlevel.com/v2/location/${locationId}/contacts/detail/${contactId}`,
+          invoiceNumber: invoiceNumber || undefined,
+          invoiceScheduleId: scheduleId || undefined,
+          monthlyFee: OFFER.priceMonthly,
+        });
+        await setCustomFields(contactId, { gbp_clickup_task_url: task.url });
+      } catch (e) {
+        console.error("ClickUp task creation failed", e);
+      }
+    }
 
     return NextResponse.json({ next: stepUrl("/done", contactId), invoiceSent: sent });
   } catch (e) {

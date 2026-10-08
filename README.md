@@ -21,6 +21,8 @@ Links between steps carry the GHL contact id plus an HMAC token (`?c=…&t=…`)
 3. Status / signed-at / signer custom fields are set and the `gbp-agreement-signed` tag is added.
 4. A recurring monthly invoice schedule ($500 inc GST, same day each month, due on issue, email only) is created and started in GHL Invoices, which emails the first invoice immediately. Schedule id, first invoice id and number are written back to the contact and the `gbp-invoice-sent` tag is added. If the schedule scope is missing, it falls back to a one-off invoice for month 1.
 
+5. If `CLICKUP_API_TOKEN` is set, a task is created in ClickUp under **Operations > New Project > GBP Optimisation** (status "to do", high priority, tag `gbp-management`) with the business/contact details, priorities, agreement PDF link, GHL contact link and invoice number in the description, and the list's Business Name / Client Name / Email / Phone / Website / Subscription custom fields filled. The task URL is written to **GBP ClickUp Task URL** on the contact. A ClickUp failure is logged and never blocks the client.
+
 Submitting twice (back button, double-click) is safe: a contact already marked Signed with an invoice id is redirected to `/done` without a second invoice.
 
 ## GHL custom fields
@@ -43,6 +45,7 @@ All fields are on the **contact** model and are created automatically on first u
 | GBP Invoice Schedule ID | TEXT |
 | GBP Invoice ID | TEXT |
 | GBP Invoice Number | TEXT |
+| GBP ClickUp Task URL | TEXT |
 
 Tags: `gbp-lead`, `gbp-details-complete`, `gbp-agreement-signed`, `gbp-invoice-sent`. Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
 
@@ -55,6 +58,8 @@ Tags: `gbp-lead`, `gbp-details-complete`, `gbp-agreement-signed`, `gbp-invoice-s
 | `GHL_USER_ID` | no | User the invoice is sent from. Defaults to the first user in the location. |
 | `APP_SECRET` | no | Signs step links. Defaults to a hash of the PIT token; set it so links survive a token rotation. |
 | `APP_URL` | no | Public URL (for the invoice logo). Vercel's `VERCEL_URL` is used otherwise. |
+| `CLICKUP_API_TOKEN` | no | ClickUp API token (`pk_…`). When set, a task is created per signed client. |
+| `CLICKUP_LIST_ID` | no | Target list. Defaults to `1300390000006185` (Operations > New Project > GBP Optimisation). |
 
 Invoices need a payment provider connected in the sub-account (Payments > Integrations) for the "Pay" button to work.
 

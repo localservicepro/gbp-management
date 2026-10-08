@@ -2,6 +2,7 @@
 // PIT token can reach the sub-account. Never echoes the token itself.
 import { NextResponse } from "next/server";
 import { ghl, GhlError } from "@/lib/ghl";
+import { clickupEnv, ClickUpError, probeList } from "@/lib/clickup";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,8 @@ export async function GET() {
     GHL_LOCATION_ID: !!process.env.GHL_LOCATION_ID,
     GHL_USER_ID: !!process.env.GHL_USER_ID,
     APP_SECRET: !!process.env.APP_SECRET,
+    CLICKUP_API_TOKEN: !!process.env.CLICKUP_API_TOKEN,
+    CLICKUP_LIST_ID: process.env.CLICKUP_LIST_ID || `(default ${clickupEnv().listId})`,
   };
   const checks: Record<string, string> = {};
 
@@ -32,6 +35,17 @@ export async function GET() {
     if (!env.GHL_USER_ID) await probe("users (users.readonly, needed because GHL_USER_ID is unset)", `/users/?locationId=${loc}`);
   }
 
-  const ok = env.GHL_PIT_TOKEN && env.GHL_LOCATION_ID && Object.values(checks).every((v) => v === "ok");
+  if (env.CLICKUP_API_TOKEN) {
+    try {
+      await probeList();
+      checks["clickup list (Operations > New Project > GBP Optimisation)"] = "ok";
+    } catch (e) {
+      checks["clickup list (Operations > New Project > GBP Optimisation)"] = e instanceof ClickUpError ? `HTTP ${e.status}: ${e.body.slice(0, 160)}` : String(e);
+    }
+  } else {
+    checks["clickup"] = "skipped: CLICKUP_API_TOKEN not set (no tasks will be created)";
+  }
+
+  const ok = env.GHL_PIT_TOKEN && env.GHL_LOCATION_ID && Object.values(checks).every((v) => v === "ok" || v.startsWith("skipped"));
   return NextResponse.json({ ok, env, checks }, { status: ok ? 200 : 503 });
 }
