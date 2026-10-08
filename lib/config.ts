@@ -50,6 +50,7 @@ export const TAGS = {
   lead: "gbp-lead",
   details: "gbp-details-complete",
   signed: "gbp-agreement-signed",
+  client: "gbp optimisation", // the client tag used in GHL workflows; added the moment they sign
   invoiced: "gbp-invoice-sent",
 };
 

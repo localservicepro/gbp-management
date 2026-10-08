@@ -132,7 +132,7 @@ export async function POST(req: Request) {
         console.error("file custom field attach failed", e);
       }
     }
-    await addTags(contactId, [TAGS.signed]);
+    await addTags(contactId, [TAGS.signed, TAGS.client]);
 
     // 2. Recurring monthly invoice, like a subscription: first invoice today, then the same
     //    day each month, each due on its issue date. Email only; GHL never texts from this.

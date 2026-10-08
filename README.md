@@ -18,7 +18,7 @@ Links between steps carry the GHL contact id plus an HMAC token (`?c=…&t=…`)
 
 1. The agreement is rendered to PDF with `pdf-lib` (parties, commercial terms, scope, clauses, signature image, audit trail: agreement ID, timestamp, IP, user agent).
 2. The PDF is uploaded to the contact's **GBP Agreement PDF** (FILE_UPLOAD) custom field; its hosted URL is also written to **GBP Agreement PDF URL** as a plain-text fallback.
-3. Status / signed-at / signer custom fields are set and the `gbp-agreement-signed` tag is added.
+3. Status / signed-at / signer custom fields are set and the `gbp-agreement-signed` and `gbp optimisation` tags are added.
 4. A recurring monthly invoice schedule ($500 inc GST, same day each month, due on issue, email only) is created and started in GHL Invoices, which emails the first invoice immediately. Schedule id, first invoice id and number are written back to the contact and the `gbp-invoice-sent` tag is added. If the schedule scope is missing, it falls back to a one-off invoice for month 1.
 
 5. If `CLICKUP_API_TOKEN` is set, a task is created in ClickUp under **Operations > New Project > GBP Optimisation** (status "to do", high priority, tag `gbp-management`) with the business/contact details, priorities, agreement PDF link, GHL contact link and invoice number in the description, and the list's Business Name / Client Name / Email / Phone / Website / Subscription custom fields filled. The task URL is written to **GBP ClickUp Task URL** on the contact. A ClickUp failure is logged and never blocks the client.
@@ -47,7 +47,7 @@ All fields are on the **contact** model and are created automatically on first u
 | GBP Invoice Number | TEXT |
 | GBP ClickUp Task URL | TEXT |
 
-Tags: `gbp-lead`, `gbp-details-complete`, `gbp-agreement-signed`, `gbp-invoice-sent`. Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
+Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete` (step 2), `gbp-agreement-signed` + `gbp optimisation` (on signing), `gbp-invoice-sent` (invoice emailed). Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
 
 ## Environment variables (Vercel)
 
