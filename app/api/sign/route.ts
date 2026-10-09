@@ -135,12 +135,8 @@ export async function POST(req: Request) {
         console.error("file custom field attach failed", e);
       }
     }
-    await addTags(contactId, [TAGS.signed, TAGS.client]);
-    try {
-      await removeTags(contactId, [TAGS.lead]); // they're a client now, not a lead
-    } catch (e) {
-      console.error("removing lead tag failed", e);
-    }
+    // Tags that trigger GHL workflows are added at the very end (see below), once the invoice
+    // and ClickUp fields are on the contact; otherwise the notification emails render blanks.
 
     // 2. Recurring monthly invoice, like a subscription: first invoice today, then the same
     //    day each month, each due on its issue date. Email only; GHL never texts from this.
@@ -245,7 +241,6 @@ export async function POST(req: Request) {
       gbp_invoice_number: invoiceNumber,
       ...(invoiceId ? { gbp_invoice_url: invoicePublicUrl(invoiceId) } : {}),
     });
-    if (sent) await addTags(contactId, [TAGS.invoiced]);
 
     // 3. ClickUp task for the ops team (Operations > New Project > GBP Optimisation).
     //    Best effort: a ClickUp outage must not block a client who has already signed and been invoiced.
@@ -278,6 +273,14 @@ export async function POST(req: Request) {
       } catch (e) {
         console.error("ClickUp task creation failed", e);
       }
+    }
+
+    // 4. Workflow-trigger tags, last of all. Everything the emails merge is already on the contact.
+    await addTags(contactId, [TAGS.signed, TAGS.client, ...(sent ? [TAGS.invoiced] : [])]);
+    try {
+      await removeTags(contactId, [TAGS.lead]); // they're a client now, not a lead
+    } catch (e) {
+      console.error("removing lead tag failed", e);
     }
 
     return NextResponse.json({ next: stepUrl("/done", contactId), invoiceSent: sent });

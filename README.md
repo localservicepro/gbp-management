@@ -18,10 +18,12 @@ Links between steps carry the GHL contact id plus an HMAC token (`?c=…&t=…`)
 
 1. The agreement is rendered to PDF with `pdf-lib` (parties, commercial terms, scope, clauses, signature image, audit trail: agreement ID, timestamp, IP, user agent).
 2. The PDF is uploaded to the contact's **GBP Agreement PDF** (FILE_UPLOAD) custom field; its hosted URL is also written to **GBP Agreement PDF URL** as a plain-text fallback.
-3. Status / signed-at / signer custom fields are set and the `gbp-agreement-signed` and `gbp optimisation` tags are added.
+3. Status / signed-at / signer custom fields are set.
 4. A recurring monthly invoice schedule ($500 inc GST, same day each month, due on issue, email only) is created and started in GHL Invoices, which emails the first invoice immediately. Schedule id, first invoice id and number are written back to the contact and the `gbp-invoice-sent` tag is added. If the schedule scope is missing, it falls back to a one-off invoice for month 1.
 
 5. If `CLICKUP_API_TOKEN` is set, a task is created in ClickUp under **Operations > New Project > GBP Optimisation** (status "to do", high priority, tag `gbp-management`) with the business/contact details, priorities, agreement PDF link, GHL contact link and invoice number in the description, and the list's Business Name / Client Name / Email / Phone / Website / Subscription custom fields filled. The task URL is written to **GBP ClickUp Task URL** on the contact. A ClickUp failure is logged and never blocks the client.
+
+6. Last of all, the workflow-trigger tags are written: `gbp-agreement-signed`, `gbp optimisation`, `gbp-invoice-sent` added and `gbp-lead` removed. They go last so that any GHL workflow fired by them (confirmation / internal emails) already sees the invoice and ClickUp fields on the contact.
 
 Submitting twice (back button, double-click) is safe: a contact already marked Signed with an invoice id is redirected to `/done` without a second invoice.
 
