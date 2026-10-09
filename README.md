@@ -58,7 +58,8 @@ Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete
 | `GHL_LOCATION_ID` | yes | Sub-account ID |
 | `GHL_USER_ID` | no | User the invoice is sent from. Defaults to the first user in the location. |
 | `APP_SECRET` | no | Signs step links. Defaults to a hash of the PIT token; set it so links survive a token rotation. |
-| `GHL_INVOICE_BASE_URL` | no | Domain serving your invoice pages (everything before `/invoice/` in a GHL "copy link"). Defaults to `https://app.gohighlevel.com`. |
+| `GHL_APP_BASE_URL` | no | White-label GHL domain for pay links and contact deep links. Defaults to `https://login.localservicepro.com.au`. |
+| `GHL_INVOICE_BASE_URL` | no | Only if invoice pages live on a different domain than the app. |
 | `APP_URL` | no | Public URL (for the invoice logo). Vercel's `VERCEL_URL` is used otherwise. |
 | `CLICKUP_API_TOKEN` | no | ClickUp API token (`pk_…`). When set, a task is created per signed client. |
 | `CLICKUP_LIST_ID` | no | Target list. Defaults to `1300390000006185` (Operations > New Project > GBP Optimisation). |

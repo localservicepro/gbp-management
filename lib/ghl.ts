@@ -221,9 +221,19 @@ export async function resolveUserId(): Promise<string> {
  * the domain is the sub-account's white-label domain if one is set, else app.gohighlevel.com.
  * Override with GHL_INVOICE_BASE_URL (e.g. https://link.localservicepro.com.au).
  */
+export function ghlAppBase(): string {
+  return (process.env.GHL_APP_BASE_URL || "https://login.localservicepro.com.au").replace(/\/+$/, "");
+}
+
 export function invoicePublicUrl(invoiceId: string): string {
-  const base = (process.env.GHL_INVOICE_BASE_URL || "https://app.gohighlevel.com").replace(/\/+$/, "");
+  const base = (process.env.GHL_INVOICE_BASE_URL || ghlAppBase()).replace(/\/+$/, "");
   return `${base}/invoice/${encodeURIComponent(invoiceId)}`;
+}
+
+/** Deep link to a contact in the (white-labelled) GHL app, for the ops team. */
+export function contactAppUrl(contactId: string): string {
+  const { locationId } = ghlEnv();
+  return `${ghlAppBase()}/v2/location/${locationId}/contacts/detail/${encodeURIComponent(contactId)}`;
 }
 
 export async function createInvoice(body: Record<string, unknown>): Promise<{ _id: string; invoiceNumber?: string | number; total?: number }> {
