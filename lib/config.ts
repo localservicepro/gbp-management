@@ -41,6 +41,7 @@ export const CUSTOM_FIELDS = {
   gbp_invoice_schedule_id: { name: "GBP Invoice Schedule ID", dataType: "TEXT" },
   gbp_invoice_id: { name: "GBP Invoice ID", dataType: "TEXT" },
   gbp_invoice_number: { name: "GBP Invoice Number", dataType: "TEXT" },
+  gbp_invoice_url: { name: "GBP Invoice URL", dataType: "TEXT" },
   gbp_clickup_task_url: { name: "GBP ClickUp Task URL", dataType: "TEXT" },
 } as const;
 

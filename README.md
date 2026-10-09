@@ -45,6 +45,7 @@ All fields are on the **contact** model and are created automatically on first u
 | GBP Invoice Schedule ID | TEXT |
 | GBP Invoice ID | TEXT |
 | GBP Invoice Number | TEXT |
+| GBP Invoice URL | TEXT (public view-and-pay link) |
 | GBP ClickUp Task URL | TEXT |
 
 Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete` (step 2), `gbp-agreement-signed` + `gbp optimisation` added and `gbp-lead` removed (on signing), `gbp-invoice-sent` (invoice emailed). Use them to trigger GHL workflows (e.g. send the onboarding form once the invoice is paid).
@@ -57,6 +58,7 @@ Tags, in order: `gbp-lead` (step 1, before the agreement), `gbp-details-complete
 | `GHL_LOCATION_ID` | yes | Sub-account ID |
 | `GHL_USER_ID` | no | User the invoice is sent from. Defaults to the first user in the location. |
 | `APP_SECRET` | no | Signs step links. Defaults to a hash of the PIT token; set it so links survive a token rotation. |
+| `GHL_INVOICE_BASE_URL` | no | Domain serving your invoice pages (everything before `/invoice/` in a GHL "copy link"). Defaults to `https://app.gohighlevel.com`. |
 | `APP_URL` | no | Public URL (for the invoice logo). Vercel's `VERCEL_URL` is used otherwise. |
 | `CLICKUP_API_TOKEN` | no | ClickUp API token (`pk_…`). When set, a task is created per signed client. |
 | `CLICKUP_LIST_ID` | no | Target list. Defaults to `1300390000006185` (Operations > New Project > GBP Optimisation). |

@@ -14,12 +14,14 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
   let email = "your email";
   let pdfUrl = "";
   let invoiceNumber = "";
+  let invoiceUrl = "";
   try {
     const contact = await getContact(c);
     const cf = await readCustomFields(contact);
     email = contact.email || email;
     pdfUrl = cf.gbp_agreement_pdf_url ? String(cf.gbp_agreement_pdf_url) : "";
     invoiceNumber = cf.gbp_invoice_number ? String(cf.gbp_invoice_number) : "";
+    invoiceUrl = cf.gbp_invoice_url ? String(cf.gbp_invoice_url) : "";
   } catch (e) {
     console.error("done page lookup failed", e);
   }
@@ -31,7 +33,7 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
           Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} inc GST has been emailed to <b>{email}</b>. Here&apos;s what happens next:
         </p>
         <ul className="checklist">
-          <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email.</div></li>
+          <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email{invoiceUrl && (<>, or <a href={invoiceUrl} target="_blank" rel="noreferrer">pay it now</a></>)}.</div></li>
           <li><span>02</span><div><b>Add us as Managers on your Google Business Profile</b> using the steps below. This is the only access we need.</div></li>
           <li><span>03</span><div><b>Month one: we rebuild the profile</b> and send every change to you for approval before it goes live. Posting starts in month two.</div></li>
         </ul>
@@ -53,6 +55,7 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
           <p className="muted">We accept the invites the same business day and email you when we&apos;ve started. Stuck? Reply to the invoice email or write to <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> and we&apos;ll walk you through it on a call.</p>
         </div>
         <div className="form-actions" style={{ borderTop: 0, paddingTop: 8 }}>
+          {invoiceUrl && <a className="btn" href={invoiceUrl} target="_blank" rel="noreferrer">View and pay invoice{invoiceNumber ? ` #${invoiceNumber}` : ""}</a>}
           {pdfUrl && <a className="btn secondary" href={pdfUrl} target="_blank" rel="noreferrer">Download signed agreement (PDF)</a>}
           <a className="btn secondary" href="/">Back to home</a>
         </div>

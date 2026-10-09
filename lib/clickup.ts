@@ -58,6 +58,7 @@ export type SignupTaskInput = {
   pdfUrl?: string;
   ghlContactUrl?: string;
   invoiceNumber?: string;
+  invoiceUrl?: string;
   invoiceScheduleId?: string;
   monthlyFee: number;
 };
@@ -101,7 +102,7 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
     `\n### Links\n` +
     line("Signed agreement (PDF)", t.pdfUrl) +
     line("GHL contact", t.ghlContactUrl) +
-    line("First invoice", t.invoiceNumber ? `#${t.invoiceNumber}` : undefined) +
+    line("First invoice", t.invoiceNumber ? (t.invoiceUrl ? `[#${t.invoiceNumber}](${t.invoiceUrl})` : `#${t.invoiceNumber}`) : undefined) +
     line("Recurring invoice schedule", t.invoiceScheduleId) +
     `\n### Next steps\n` +
     `- [ ] Confirm first invoice paid\n` +

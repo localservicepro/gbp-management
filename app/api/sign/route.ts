@@ -11,6 +11,7 @@ import {
   ensureCustomFields,
   getContact,
   GhlError,
+  invoicePublicUrl,
   ghlEnv,
   readCustomFields,
   removeTags,
@@ -241,6 +242,7 @@ export async function POST(req: Request) {
       ...(scheduleId ? { gbp_invoice_schedule_id: scheduleId } : {}),
       gbp_invoice_id: invoiceId,
       gbp_invoice_number: invoiceNumber,
+      ...(invoiceId ? { gbp_invoice_url: invoicePublicUrl(invoiceId) } : {}),
     });
     if (sent) await addTags(contactId, [TAGS.invoiced]);
 
@@ -265,6 +267,7 @@ export async function POST(req: Request) {
           pdfUrl: pdfUrl || undefined,
           ghlContactUrl: `https://app.gohighlevel.com/v2/location/${locationId}/contacts/detail/${contactId}`,
           invoiceNumber: invoiceNumber || undefined,
+          invoiceUrl: invoiceId ? invoicePublicUrl(invoiceId) : undefined,
           invoiceScheduleId: scheduleId || undefined,
           monthlyFee: OFFER.priceMonthly,
         });

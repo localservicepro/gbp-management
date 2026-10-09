@@ -11,7 +11,7 @@
   contact.website, contact.address1, contact.registered_business_name, contact.abn, contact.contact_role,
   contact.gbp_priority_suburbs, contact.gbp_priority_services, contact.gbp_agreement_signed_at,
   contact.gbp_agreement_signer, contact.gbp_agreement_pdf_url, contact.gbp_invoice_number,
-  contact.gbp_invoice_schedule_id, contact.gbp_clickup_task_url, contact.id, location.id
+  contact.gbp_invoice_url, contact.gbp_invoice_schedule_id, contact.gbp_clickup_task_url, contact.id, location.id
 -->
 </head>
 <body style="margin:0;padding:0;background:#f2f5fa;font-family:Inter,'Segoe UI',Arial,Helvetica,sans-serif;color:#141a26;">
@@ -76,7 +76,7 @@
       <tr><td style="background:#ffffff;padding:18px 28px 8px;">
         <p style="margin:0 0 8px;font:600 11px/1 'JetBrains Mono',Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:#2563ff;">Billing</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;line-height:1.5;color:#141a26;">
-          <tr><td width="150" style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">First invoice</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;">#{{contact.gbp_invoice_number}} · emailed, awaiting payment</td></tr>
+          <tr><td width="150" style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">First invoice</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;"><a href="{{contact.gbp_invoice_url}}" style="color:#2563ff;">#{{contact.gbp_invoice_number}}</a> · emailed, awaiting payment</td></tr>
           <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;color:#5b6472;">Recurring schedule</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;">{{contact.gbp_invoice_schedule_id}}</td></tr>
         </table>
       </td></tr>

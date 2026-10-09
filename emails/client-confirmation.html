@@ -7,7 +7,7 @@
 <!--
   GHL workflow email: send to the client when the "gbp optimisation" tag is added (or on invoice paid).
   Merge fields used: contact.first_name, contact.company_name, contact.email,
-  contact.gbp_agreement_pdf_url, contact.gbp_invoice_number, contact.registered_business_name
+  contact.gbp_agreement_pdf_url, contact.gbp_invoice_number, contact.gbp_invoice_url, contact.registered_business_name
   Paste into Workflow > Send Email > Code editor (or save as an Email Template).
 -->
 </head>
@@ -38,7 +38,7 @@
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td width="40" valign="top" style="padding:0 0 18px;"><span style="display:inline-block;width:28px;height:28px;border-radius:14px;background:#2563ff;color:#fff;font:700 13px/28px Arial,sans-serif;text-align:center;">1</span></td>
-            <td valign="top" style="padding:3px 0 18px;font-size:15px;line-height:1.55;color:#3b4350;"><strong style="color:#141a26;">Pay the first invoice</strong> from the link in the invoice email. Nothing starts until it clears.</td>
+            <td valign="top" style="padding:3px 0 18px;font-size:15px;line-height:1.55;color:#3b4350;"><strong style="color:#141a26;">Pay the first invoice</strong> (#{{contact.gbp_invoice_number}}, $500 inc GST) using the button below or the link in the invoice email. Nothing starts until it clears.</td>
           </tr>
           <tr>
             <td width="40" valign="top" style="padding:0 0 18px;"><span style="display:inline-block;width:28px;height:28px;border-radius:14px;background:#2563ff;color:#fff;font:700 13px/28px Arial,sans-serif;text-align:center;">2</span></td>
@@ -93,9 +93,15 @@
       <!-- button -->
       <tr><td style="background:#ffffff;padding:0 32px 36px;">
         <table role="presentation" cellpadding="0" cellspacing="0">
-          <tr><td style="background:#2563ff;border-radius:8px;">
-            <a href="{{contact.gbp_agreement_pdf_url}}" style="display:inline-block;padding:14px 24px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">Download your signed agreement (PDF)</a>
-          </td></tr>
+          <tr>
+            <td style="background:#2563ff;border-radius:8px;">
+              <a href="{{contact.gbp_invoice_url}}" style="display:inline-block;padding:14px 24px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">View and pay invoice #{{contact.gbp_invoice_number}}</a>
+            </td>
+            <td width="12"></td>
+            <td style="border:1px solid #c8d0db;border-radius:8px;">
+              <a href="{{contact.gbp_agreement_pdf_url}}" style="display:inline-block;padding:13px 20px;font-size:15px;font-weight:600;color:#141a26;text-decoration:none;">Signed agreement (PDF)</a>
+            </td>
+          </tr>
         </table>
         <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#5b6472;">Questions? Just reply to this email or write to <a href="mailto:info@localservicepro.com.au" style="color:#2563ff;">info@localservicepro.com.au</a>.</p>
       </td></tr>
