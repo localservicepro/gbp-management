@@ -217,16 +217,16 @@ export async function resolveUserId(): Promise<string> {
 }
 
 /**
- * Public "view & pay" page for an invoice. GHL serves it at <invoice domain>/invoice/<id>;
- * the domain is the sub-account's white-label domain if one is set, else app.gohighlevel.com.
- * Override with GHL_INVOICE_BASE_URL (e.g. https://link.localservicepro.com.au).
+ * Public "view & pay" page for an invoice: <invoice domain>/invoice/<id>.
+ * Override with GHL_INVOICE_BASE_URL if the domain ever changes.
  */
 export function ghlAppBase(): string {
   return (process.env.GHL_APP_BASE_URL || "https://login.localservicepro.com.au").replace(/\/+$/, "");
 }
 
 export function invoicePublicUrl(invoiceId: string): string {
-  const base = (process.env.GHL_INVOICE_BASE_URL || ghlAppBase()).replace(/\/+$/, "");
+  // Invoices are served from the brand domain, not the login domain.
+  const base = (process.env.GHL_INVOICE_BASE_URL || "https://brand.localservicepro.com.au").replace(/\/+$/, "");
   return `${base}/invoice/${encodeURIComponent(invoiceId)}`;
 }
 
