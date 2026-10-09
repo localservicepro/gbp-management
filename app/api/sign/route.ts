@@ -141,8 +141,11 @@ export async function POST(req: Request) {
     // 2. Recurring monthly invoice, like a subscription: first invoice today, then the same
     //    day each month, each due on its issue date. Email only; GHL never texts from this.
     const { locationId } = ghlEnv();
-    const today = signedAtISO.slice(0, 10);
-    const dayOfMonth = Math.min(new Date(signedAtISO).getUTCDate(), 28); // keep a stable billing day in short months
+    // GHL validates invoice dates against the sub-account's timezone, so "today" must be the
+    // Australian date, not UTC: an evening sign-up in Sydney is already "yesterday" in UTC.
+    const today = localDate(new Date(signedAtISO));
+    const tomorrow = localDate(new Date(Date.now() + 86_400_000));
+    const dayOfMonth = Math.min(Number(today.slice(8, 10)), 28); // keep a stable billing day in short months
     const appUrl = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "");
     const businessDetails = {
       name: COMPANY.legalName,
@@ -171,6 +174,7 @@ export async function POST(req: Request) {
     const termsNotes = `<p>${COMPANY.legalName} · ABN ${COMPANY.abn}</p><p>Your ${OFFER.name} agreement (${agreementId}) is billed monthly on the ${ordinal(dayOfMonth)}. Once the first payment clears, the onboarding form link follows by email. Questions: ${COMPANY.email}</p>`;
 
     let scheduleId = "";
+    let scheduleError = "";
     let invoiceId = "";
     let invoiceNumber = "";
     let sent = false;
@@ -209,22 +213,32 @@ export async function POST(req: Request) {
       // Fall back to a one-off invoice for month 1 so the client is never left without a bill;
       // the recurring schedule can be set up by hand in GHL. Usually a missing invoices/schedule.write scope.
       console.error("recurring invoice schedule failed, falling back to one-off invoice", e);
-      const invoice = await createInvoice({
-        altId: locationId,
-        altType: "location",
-        name: `${OFFER.name} - Month 1 - ${str(cf.registered_business_name)}`,
-        title: "TAX INVOICE",
-        currency: OFFER.currency,
-        businessDetails,
-        contactDetails,
-        items: items.map((i) => ({ ...i, type: "one_time" })),
-        discount: { type: "percentage", value: 0 },
-        issueDate: today,
-        dueDate: today,
-        sentTo: { email: [contact.email || ""] },
-        liveMode: true,
-        termsNotes,
-      });
+      scheduleError = e instanceof GhlError ? `GHL ${e.status}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message : String(e);
+      const oneOff = (dueDate: string) =>
+        createInvoice({
+          altId: locationId,
+          altType: "location",
+          name: `${OFFER.name} - Month 1 - ${str(cf.registered_business_name)}`,
+          title: "TAX INVOICE",
+          currency: OFFER.currency,
+          businessDetails,
+          contactDetails,
+          items: items.map((i) => ({ ...i, type: "one_time" })),
+          discount: { type: "percentage", value: 0 },
+          issueDate: today,
+          dueDate,
+          sentTo: { email: [contact.email || ""] },
+          liveMode: true,
+          termsNotes,
+        });
+      let invoice;
+      try {
+        invoice = await oneOff(today);
+      } catch (e2) {
+        // Clock skew between us and GHL around midnight: push the due date one day out rather than fail the client.
+        if (e2 instanceof GhlError && /due date in past/i.test(e2.body)) invoice = await oneOff(tomorrow);
+        else throw e2;
+      }
       invoiceId = invoice._id;
       invoiceNumber = invoice.invoiceNumber != null ? String(invoice.invoiceNumber) : "";
       try {
@@ -267,6 +281,7 @@ export async function POST(req: Request) {
           invoiceNumber: invoiceNumber || undefined,
           invoiceUrl: invoiceId ? invoicePublicUrl(invoiceId) : undefined,
           invoiceScheduleId: scheduleId || undefined,
+          scheduleError: scheduleError || undefined,
           monthlyFee: OFFER.priceMonthly,
         });
         await setCustomFields(contactId, { gbp_clickup_task_url: task.url });
@@ -296,4 +311,12 @@ function ordinal(n: number): string {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+/** YYYY-MM-DD in the business's timezone (GHL_TIMEZONE, default Australia/Sydney). */
+function localDate(d: Date): string {
+  const tz = process.env.GHL_TIMEZONE || "Australia/Sydney";
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)!.value;
+  return `${get("year")}-${get("month")}-${get("day")}`;
 }

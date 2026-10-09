@@ -62,6 +62,7 @@ export type SignupTaskInput = {
   invoiceNumber?: string;
   invoiceUrl?: string;
   invoiceScheduleId?: string;
+  scheduleError?: string; // set when the recurring schedule could not be created and a one-off invoice went out instead
   monthlyFee: number;
 };
 
@@ -113,11 +114,14 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
     line("Services they want more of", t.services) +
     `\n### Billing\n` +
     line("First invoice", t.invoiceNumber ? (t.invoiceUrl ? `[#${t.invoiceNumber}](${t.invoiceUrl})` : `#${t.invoiceNumber}`) : undefined) +
-    line("Recurring invoice schedule ID", t.invoiceScheduleId) +
+    (t.scheduleError
+      ? `- **Recurring invoice schedule:** ⚠️ NOT CREATED. A one-off month-1 invoice was sent instead. Set up the monthly recurring invoice in GHL by hand. Error: ${t.scheduleError}\n`
+      : line("Recurring invoice schedule ID", t.invoiceScheduleId)) +
     `\n### Links\n` +
     line("GHL contact", t.ghlContactUrl) +
     line("Signed agreement (PDF)", t.pdfUrl) +
     `\n### Next steps\n` +
+    (t.scheduleError ? `- [ ] ⚠️ Create the recurring monthly invoice in GHL (automatic schedule failed)\n` : "") +
     `- [ ] Confirm first invoice paid\n` +
     `- [ ] Accept Manager invites (support@ and info@) on the Google Business Profile\n` +
     `- [ ] Month 1: profile rebuild (categories, service area, services, description, hours)\n` +
