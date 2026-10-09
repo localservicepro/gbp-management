@@ -112,7 +112,7 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
     `- [ ] Month 2: start 8 posts/month\n`;
 
   const r = await cu<{ id: string; url: string }>("POST", `/list/${listId}/task`, {
-    name: `GBP Optimisation - ${t.businessName}`,
+    name: t.businessName,
     markdown_description: description,
     status: "to do",
     priority: 2, // high: a paid client is waiting
