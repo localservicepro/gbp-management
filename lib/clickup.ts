@@ -55,6 +55,8 @@ export type SignupTaskInput = {
   services?: string;
   agreementId: string;
   signedAtISO: string;
+  signerName?: string;
+  minimumTermMonths: number;
   pdfUrl?: string;
   ghlContactUrl?: string;
   invoiceNumber?: string;
@@ -82,31 +84,42 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
   put("Website", t.website);
   put("Subscription", t.monthlyFee);
 
-  const signedLocal = new Date(t.signedAtISO).toLocaleString("en-AU", { timeZone: "Australia/Brisbane", dateStyle: "medium", timeStyle: "short" });
-  const line = (k: string, v?: string) => (v ? `- **${k}:** ${v}\n` : "");
+  const signedLocal = new Date(t.signedAtISO).toLocaleString("en-AU", { timeZone: "Australia/Brisbane", dateStyle: "long", timeStyle: "short" });
+  // Every field is listed, even when empty, so nobody wonders whether it was asked.
+  const v = (x?: string) => (x && x.trim() ? x.trim() : "_(not supplied)_");
+  const line = (k: string, val?: string) => `- **${k}:** ${v(val)}\n`;
   const description =
     `## New GBP Management client\n\n` +
-    `Signed up online on ${signedLocal}. Agreement **${t.agreementId}**.\n\n` +
-    `### Business\n` +
-    line("Trading name", t.businessName) +
-    line("Legal entity", `${t.legalName} (${t.businessNumber})`) +
-    line("Address", t.address) +
+    `Signed up online via the GBP sign-up flow.\n\n` +
+    `### Agreement\n` +
+    line("Agreement ID", t.agreementId) +
+    line("Signed at", signedLocal + " (AEST)") +
+    line("Signed by", `${t.signerName || t.contactName} (${t.role})`) +
+    line("Plan", `GBP Management, $${t.monthlyFee}/month inc GST, ${t.minimumTermMonths}-month minimum, then month to month`) +
+    line("Signed PDF", t.pdfUrl) +
+    `\n### Business\n` +
+    line("Trading name (as on Google)", t.businessName) +
+    line("Legal entity", t.legalName) +
+    line("ABN / ACN", t.businessNumber) +
+    line("Business address", t.address) +
     line("Website", t.website) +
-    `\n### Contact\n` +
-    line("Name", `${t.contactName}, ${t.role}`) +
+    `\n### Client contact\n` +
+    line("Name", t.contactName) +
+    line("Role", t.role) +
     line("Email", t.email) +
     line("Mobile", t.phone) +
     `\n### Priorities (from sign-up)\n` +
-    line("Suburbs", t.suburbs || "(not supplied)") +
-    line("Services", t.services || "(not supplied)") +
-    `\n### Links\n` +
-    line("Signed agreement (PDF)", t.pdfUrl) +
-    line("GHL contact", t.ghlContactUrl) +
+    line("Suburbs they want more work in", t.suburbs) +
+    line("Services they want more of", t.services) +
+    `\n### Billing\n` +
     line("First invoice", t.invoiceNumber ? (t.invoiceUrl ? `[#${t.invoiceNumber}](${t.invoiceUrl})` : `#${t.invoiceNumber}`) : undefined) +
-    line("Recurring invoice schedule", t.invoiceScheduleId) +
+    line("Recurring invoice schedule ID", t.invoiceScheduleId) +
+    `\n### Links\n` +
+    line("GHL contact", t.ghlContactUrl) +
+    line("Signed agreement (PDF)", t.pdfUrl) +
     `\n### Next steps\n` +
     `- [ ] Confirm first invoice paid\n` +
-    `- [ ] Accept Manager invite on the Google Business Profile\n` +
+    `- [ ] Accept Manager invites (support@ and info@) on the Google Business Profile\n` +
     `- [ ] Month 1: profile rebuild (categories, service area, services, description, hours)\n` +
     `- [ ] Send changes to client for approval\n` +
     `- [ ] Month 2: start 8 posts/month\n`;

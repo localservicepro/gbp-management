@@ -265,6 +265,8 @@ export async function POST(req: Request) {
           services: str(cf.gbp_priority_services) || undefined,
           agreementId,
           signedAtISO,
+          signerName,
+          minimumTermMonths: OFFER.minimumTermMonths,
           pdfUrl: pdfUrl || undefined,
           ghlContactUrl: contactAppUrl(contactId),
           invoiceNumber: invoiceNumber || undefined,
