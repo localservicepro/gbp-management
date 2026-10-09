@@ -213,7 +213,7 @@ export async function POST(req: Request) {
       // Fall back to a one-off invoice for month 1 so the client is never left without a bill;
       // the recurring schedule can be set up by hand in GHL. Usually a missing invoices/schedule.write scope.
       console.error("recurring invoice schedule failed, falling back to one-off invoice", e);
-      scheduleError = e instanceof GhlError ? `GHL ${e.status}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message : String(e);
+      scheduleError = e instanceof GhlError ? `LSP system ${e.status}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message : String(e);
       const oneOff = (dueDate: string) =>
         createInvoice({
           altId: locationId,
@@ -302,7 +302,7 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error("sign failed", e);
     const status = e instanceof GhlError ? 502 : 500;
-    const ref = e instanceof GhlError ? `GHL ${e.status} on ${e.path}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message.slice(0, 200) : "unknown";
+    const ref = e instanceof GhlError ? `LSP system ${e.status} on ${e.path}: ${e.body.slice(0, 200)}` : e instanceof Error ? e.message.slice(0, 200) : "unknown";
     return NextResponse.json({ error: `Couldn't finalise the agreement just now. Nothing has been charged. Try again in a moment. (Ref: ${ref})` }, { status });
   }
 }

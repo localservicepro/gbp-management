@@ -115,13 +115,13 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
     `\n### Billing\n` +
     line("First invoice", t.invoiceNumber ? (t.invoiceUrl ? `[#${t.invoiceNumber}](${t.invoiceUrl})` : `#${t.invoiceNumber}`) : undefined) +
     (t.scheduleError
-      ? `- **Recurring invoice schedule:** ⚠️ NOT CREATED. A one-off month-1 invoice was sent instead. Set up the monthly recurring invoice in GHL by hand. Error: ${t.scheduleError}\n`
+      ? `- **Recurring invoice schedule:** ⚠️ NOT CREATED. A one-off month-1 invoice was sent instead. Set up the monthly recurring invoice in the LSP system by hand. Error: ${t.scheduleError}\n`
       : line("Recurring invoice schedule ID", t.invoiceScheduleId)) +
     `\n### Links\n` +
-    line("GHL contact", t.ghlContactUrl) +
+    line("LSP contact", t.ghlContactUrl) +
     line("Signed agreement (PDF)", t.pdfUrl) +
     `\n### Next steps\n` +
-    (t.scheduleError ? `- [ ] ⚠️ Create the recurring monthly invoice in GHL (automatic schedule failed)\n` : "") +
+    (t.scheduleError ? `- [ ] ⚠️ Create the recurring monthly invoice in the LSP system (automatic schedule failed)\n` : "") +
     `- [ ] Confirm first invoice paid\n` +
     `- [ ] Accept Manager invites (support@ and info@) on the Google Business Profile\n` +
     `- [ ] Month 1: profile rebuild (categories, service area, services, description, hours)\n` +

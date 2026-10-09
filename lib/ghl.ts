@@ -14,7 +14,7 @@ export function ghlEnv() {
 
 export class GhlError extends Error {
   constructor(public status: number, public path: string, public body: string) {
-    super(`GHL ${status} on ${path}: ${body.slice(0, 300)}`);
+    super(`LSP system ${status} on ${path}: ${body.slice(0, 300)}`);
   }
 }
 
@@ -201,7 +201,7 @@ export async function uploadToFileField(fieldId: string, filename: string, bytes
   );
   const map = r.uploadedFiles || {};
   const url = Object.values(map)[0] || r.meta?.[0]?.url || "";
-  if (!url) throw new Error("GHL file upload returned no URL");
+  if (!url) throw new Error("LSP system file upload returned no URL");
   return { url, map };
 }
 
