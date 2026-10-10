@@ -284,3 +284,9 @@ input,select,textarea{padding:14px 15px;font-size:1rem}
 .paper .phase{margin-top:14px}
 .paper .phase h3{font-size:.98rem}
 .paper .phase-note{color:#5b6472;font-size:.88rem;margin-top:2px}
+/* done page: pay-now callout above the checklist */
+.pay-now{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:var(--tint);border:1px solid rgba(37,99,255,.45);border-radius:12px;padding:18px 22px}
+.pay-now b{display:block;font-size:1.05rem}
+.pay-now span{display:block;color:var(--muted);font-size:.92rem;margin-top:2px}
+.pay-now .btn{padding:14px 24px;font-size:1.02rem;white-space:nowrap}
+@media(max-width:600px){.pay-now .btn{width:100%}}

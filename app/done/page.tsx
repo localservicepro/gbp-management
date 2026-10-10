@@ -30,10 +30,20 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
     <FlowShell current={3} title="Signed. Your invoice is on its way.">
       <div className="done-hero">
         <p style={{ fontSize: "1.1rem" }}>
-          Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} inc GST has been emailed to <b>{email}</b>. Here&apos;s what happens next:
+          Your first invoice{invoiceNumber ? ` (#${invoiceNumber})` : ""} for ${OFFER.priceMonthly} inc GST has been emailed to <b>{email}</b>.
         </p>
+        {invoiceUrl && (
+          <div className="pay-now">
+            <div>
+              <b>Pay your first invoice</b>
+              <span>${OFFER.priceMonthly} inc GST · due today · card or bank</span>
+            </div>
+            <a className="btn" href={invoiceUrl} target="_blank" rel="noreferrer">View and pay invoice{invoiceNumber ? ` #${invoiceNumber}` : ""}</a>
+          </div>
+        )}
+        <p style={{ fontSize: "1.05rem" }}>Here&apos;s what happens next:</p>
         <ul className="checklist">
-          <li><span>01</span><div><b>Pay the first invoice</b> from the link in the email{invoiceUrl && (<>, or <a href={invoiceUrl} target="_blank" rel="noreferrer">pay it now</a></>)}.</div></li>
+          <li><span>01</span><div><b>Pay the first invoice</b> using the button above or the link in the email. Nothing starts until it clears.</div></li>
           <li><span>02</span><div><b>Add us as Managers on your Google Business Profile</b> using the steps below. This is the only access we need.</div></li>
           <li><span>03</span><div><b>Month one: we rebuild the profile</b> and send every change to you for approval before it goes live. Posting starts in month two.</div></li>
         </ul>
@@ -55,7 +65,6 @@ export default async function DonePage({ searchParams }: { searchParams: Promise
           <p className="muted">We accept the invites the same business day and email you when we&apos;ve started. Stuck? Reply to the invoice email or write to <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> and we&apos;ll walk you through it on a call.</p>
         </div>
         <div className="form-actions" style={{ borderTop: 0, paddingTop: 8 }}>
-          {invoiceUrl && <a className="btn" href={invoiceUrl} target="_blank" rel="noreferrer">View and pay invoice{invoiceNumber ? ` #${invoiceNumber}` : ""}</a>}
           {pdfUrl && <a className="btn secondary" href={pdfUrl} target="_blank" rel="noreferrer">Download signed agreement (PDF)</a>}
           <a className="btn secondary" href="/">Back to home</a>
         </div>
