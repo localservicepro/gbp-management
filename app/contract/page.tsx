@@ -86,6 +86,7 @@ export default async function ContractPage({ searchParams }: { searchParams: Pro
               {contact.companyName && contact.companyName !== s(cf.registered_business_name) && <div>Trading as {contact.companyName}</div>}
               <div>{s(cf.business_address) || contact.address1}</div>
               {contact.website && <div>{contact.website}</div>}
+              {s(cf.gbp_profile_url) && <div>GBP: <a href={s(cf.gbp_profile_url)} target="_blank" rel="noreferrer">{s(cf.gbp_profile_url)}</a></div>}
             </div>
           </div>
           <dl className="kv">

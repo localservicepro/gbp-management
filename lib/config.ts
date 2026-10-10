@@ -31,6 +31,7 @@ export const CUSTOM_FIELDS = {
   abn: { name: "ABN", dataType: "TEXT" },
   contact_role: { name: "Contact Role", dataType: "TEXT" },
   business_address: { name: "Business Address", dataType: "TEXT" },
+  gbp_profile_url: { name: "GBP Profile Link", dataType: "TEXT" },
   gbp_priority_suburbs: { name: "GBP Priority Suburbs", dataType: "LARGE_TEXT" },
   gbp_priority_services: { name: "GBP Priority Services", dataType: "LARGE_TEXT" },
   gbp_agreement_status: { name: "GBP Agreement Status", dataType: "TEXT" },

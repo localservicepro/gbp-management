@@ -51,6 +51,7 @@ export type SignupTaskInput = {
   phone: string;
   address: string;
   website?: string;
+  gbpProfileUrl?: string;
   suburbs?: string;
   services?: string;
   agreementId: string;
@@ -83,6 +84,7 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
   put("Email", t.email);
   put("Phone", t.phone);
   put("Website", t.website);
+  put("GMB", t.gbpProfileUrl); // the list's existing "GMB" url field
   put("Subscription", t.monthlyFee);
 
   const signedLocal = new Date(t.signedAtISO).toLocaleString("en-AU", { timeZone: "Australia/Brisbane", dateStyle: "long", timeStyle: "short" });
@@ -104,6 +106,7 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
     line("ABN / ACN", t.businessNumber) +
     line("Business address", t.address) +
     line("Website", t.website) +
+    line("Google Business Profile link", t.gbpProfileUrl) +
     `\n### Client contact\n` +
     line("Name", t.contactName) +
     line("Role", t.role) +

@@ -37,6 +37,7 @@ All fields are on the **contact** model and are created automatically on first u
 | ABN | TEXT |
 | Contact Role | TEXT |
 | Business Address | TEXT |
+| GBP Profile Link | TEXT (client-supplied Google Business Profile URL, optional) |
 | GBP Priority Suburbs | LARGE_TEXT |
 | GBP Priority Services | LARGE_TEXT |
 | GBP Agreement Status | TEXT (`Awaiting signature` / `Signed`) |

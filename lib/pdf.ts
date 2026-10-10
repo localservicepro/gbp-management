@@ -13,6 +13,7 @@ export type AgreementData = {
   abn: string;
   businessAddress: string;
   website?: string;
+  gbpProfileUrl?: string;
   suburbs?: string;
   services?: string;
   // signature
@@ -108,6 +109,7 @@ export async function renderAgreementPdf(d: AgreementData, logoPng?: Uint8Array,
   kv("Trading as", d.companyName);
   kv("Address", d.businessAddress);
   if (d.website) kv("Website", d.website);
+  if (d.gbpProfileUrl) kv("Google Business Profile", d.gbpProfileUrl);
   kv("Signatory", `${d.contactName}, ${d.contactRole}`);
   kv("Contact", `${d.email} · ${d.phone}`);
   gap(8);

@@ -8,7 +8,7 @@
   GHL workflow email: send to the team (info@ / ops) when the "gbp optimisation" tag is added.
   Subject suggestion:  New GBP client: {{contact.company_name}} ({{contact.first_name}} {{contact.last_name}})
   Merge fields used: contact.first_name, contact.last_name, contact.company_name, contact.email, contact.phone,
-  contact.website, contact.address1, contact.registered_business_name, contact.abn, contact.contact_role,
+  contact.website, contact.gbp_profile_url, contact.address1, contact.registered_business_name, contact.abn, contact.contact_role,
   contact.gbp_priority_suburbs, contact.gbp_priority_services, contact.gbp_agreement_signed_at,
   contact.gbp_agreement_signer, contact.gbp_agreement_pdf_url, contact.gbp_invoice_number,
   contact.gbp_invoice_url, contact.gbp_invoice_schedule_id, contact.gbp_clickup_task_url, contact.id, location.id
@@ -52,7 +52,8 @@
           <tr><td width="150" style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Trading name</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;">{{contact.company_name}}</td></tr>
           <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Legal entity</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;">{{contact.registered_business_name}} · {{contact.abn}}</td></tr>
           <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Address</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;">{{contact.address1}}</td></tr>
-          <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;color:#5b6472;">Website</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;"><a href="{{contact.website}}" style="color:#2563ff;">{{contact.website}}</a></td></tr>
+          <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;color:#5b6472;">Website</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;"><a href="{{contact.website}}" style="color:#2563ff;">{{contact.website}}</a></td></tr>
+          <tr><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;color:#5b6472;">GBP link</td><td style="padding:7px 0;border-top:1px solid #e3e7ee;border-bottom:1px solid #e3e7ee;"><a href="{{contact.gbp_profile_url}}" style="color:#2563ff;">{{contact.gbp_profile_url}}</a></td></tr>
         </table>
       </td></tr>
 

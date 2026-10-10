@@ -99,6 +99,7 @@ export type DetailsInput = {
   contact_role: string;
   business_address: string;
   website: string;
+  gbp_profile_url: string;
   suburbs: string;
   services: string;
 };
@@ -113,6 +114,7 @@ export function validateDetails(b: Partial<DetailsInput>): { ok: true; data: Det
     contact_role: (b.contact_role || "").trim(),
     business_address: (b.business_address || "").trim(),
     website: (b.website || "").trim(),
+    gbp_profile_url: (b.gbp_profile_url || "").trim(),
     suburbs: (b.suburbs || "").trim(),
     services: (b.services || "").trim(),
   };
@@ -128,6 +130,11 @@ export function validateDetails(b: Partial<DetailsInput>): { ok: true; data: Det
   if (data.website && !/^https?:\/\/\S+$/i.test(data.website)) {
     if (/^[\w.-]+\.[a-z]{2,}(\/\S*)?$/i.test(data.website)) data.website = "https://" + data.website;
     else errors.website = "Enter a full website address or leave it blank.";
+  }
+  if (data.gbp_profile_url && !/^https?:\/\/\S+$/i.test(data.gbp_profile_url)) {
+    // g.page/xyz, maps.app.goo.gl/abc, google.com/maps/... pasted without a scheme
+    if (/^[\w.-]+\.[a-z]{2,}(\/\S*)?$/i.test(data.gbp_profile_url)) data.gbp_profile_url = "https://" + data.gbp_profile_url;
+    else errors.gbp_profile_url = "Paste the link to your Google Business Profile, or leave it blank.";
   }
   if (Object.keys(errors).length) return { ok: false, errors };
   return { ok: true, data };

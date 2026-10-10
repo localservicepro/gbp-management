@@ -49,6 +49,12 @@ export function DetailsForm({ c, t, initial }: { c: string; t: string; initial: 
             <input id="website" type="url" inputMode="url" placeholder="https://" value={f.website} onChange={set("website")} />
             {errors.website && <span className="err">{errors.website}</span>}
           </div>
+          <div className={bad("gbp_profile_url") + " full"}>
+            <label htmlFor="gbp_profile_url">Link to your Google Business Profile <em>(optional, but saves us a day)</em></label>
+            <input id="gbp_profile_url" type="url" inputMode="url" placeholder="e.g. https://g.page/your-business or a maps.app.goo.gl link" value={f.gbp_profile_url} onChange={set("gbp_profile_url")} />
+            {errors.gbp_profile_url && <span className="err">{errors.gbp_profile_url}</span>}
+            <span className="hint">Search your business name on Google, open the profile, click <b>Share</b> and copy the link. Or in business.google.com use <b>Share profile</b>.</span>
+          </div>
         </div>
       </div>
 

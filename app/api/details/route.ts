@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       abn: formatBusinessNumber(d.abn),
       contact_role: d.contact_role,
       business_address: d.business_address,
+      gbp_profile_url: d.gbp_profile_url,
       gbp_priority_suburbs: d.suburbs,
       gbp_priority_services: d.services,
       gbp_agreement_status: "Awaiting signature",

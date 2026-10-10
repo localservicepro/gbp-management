@@ -12,7 +12,7 @@ export default async function DetailsPage({ searchParams }: { searchParams: Prom
   if (!verifyContact(c, t)) return <InvalidLink />;
 
   // Pre-fill from GHL so a returning visitor (back button, refreshed link) doesn't retype.
-  let initial = { registered_business_name: "", abn: "", contact_role: "", business_address: "", website: "", suburbs: "", services: "" };
+  let initial = { registered_business_name: "", abn: "", contact_role: "", business_address: "", website: "", gbp_profile_url: "", suburbs: "", services: "" };
   try {
     const contact = await getContact(c);
     const cf = await readCustomFields(contact);
@@ -23,6 +23,7 @@ export default async function DetailsPage({ searchParams }: { searchParams: Prom
       contact_role: s(cf.contact_role),
       business_address: s(cf.business_address) || contact.address1 || "",
       website: contact.website || "",
+      gbp_profile_url: s(cf.gbp_profile_url),
       suburbs: s(cf.gbp_priority_suburbs),
       services: s(cf.gbp_priority_services),
     };
