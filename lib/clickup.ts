@@ -85,6 +85,16 @@ export async function createSignupTask(t: SignupTaskInput): Promise<{ id: string
   put("Phone", t.phone);
   put("Website", t.website);
   put("GMB", t.gbpProfileUrl); // the list's existing "GMB" url field
+  // Filled automatically if you add fields with these names to the list (ClickUp's API can't create field definitions).
+  put("Legal Entity", t.legalName);
+  put("ABN", t.businessNumber);
+  put("Role", t.role);
+  put("Address", t.address);
+  put("Priority Suburbs", t.suburbs);
+  put("Priority Services", t.services);
+  put("Agreement ID", t.agreementId);
+  put("Agreement PDF", t.pdfUrl);
+  put("Invoice", t.invoiceUrl);
   put("Subscription", t.monthlyFee);
 
   const signedLocal = new Date(t.signedAtISO).toLocaleString("en-AU", { timeZone: "Australia/Brisbane", dateStyle: "long", timeStyle: "short" });
